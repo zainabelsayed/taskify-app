@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
-import HeroSection from "../hero-section/HeroSection";
+import HeroSection from "../../hero-section/HeroSection";
 import TaskifyNumbers from '../numbers-section/TaskifyNumbers'
 import Footer from "../footer/Footer";
 import Features from '../features/Features'
