@@ -1,0 +1,11 @@
+.head-hight{
+    line-height: 2rem;
+}
+.counter-item{
+    padding: 2.5rem 0;
+    border-radius: 1rem;
+    background-color: #F4F4F4;
+}
+.image-border{
+    border-radius: 1.5em;
+}

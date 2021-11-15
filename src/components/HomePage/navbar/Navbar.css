@@ -1,0 +1,16 @@
+:root{
+    --color-primary:  #f476a3;
+}
+.btn-white{
+    background-color: white !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    transition: 0.3s ease-in-out;
+}
+.btn-white:hover{
+    background-color: var(--color-primary) !important;
+    color: white !important;
+}
+.logo-font{
+    font-family: 'Squada One', cursive;
+}
