@@ -1,9 +1,8 @@
 import React from "react";
-import CountUp from "react-countup";
-import VisibilitySensor from "react-visibility-sensor";
 import "./TaskifyNumbers.css";
 import dashboardImg from "../../../assets/images/Taskify dashboard.png";
 import dashboardImgPart1 from "../../../assets/images/Taskify dashboard-1.png";
+import CounterItem from "./CounterItem";
 export default function TaskifyNumbers() {
   return (
     <section className="mt-0 pt-0 my-md-5 py-md-5">
@@ -19,56 +18,10 @@ export default function TaskifyNumbers() {
               data in easy to read simple view, and a user friendly user
               interface with no hassle.
             </p>
-            <div className="row pt-5">
-              <div className="col-7 col-md-4 mx-auto">
-                <div className="counter-item">
-                  <h2 className="fs-1">
-                  <CountUp start={0} end={13} duration="1.5">
-                      {({ countUpRef, start }) => (
-                        <VisibilitySensor onChange={start} delayedCall>
-                          <span ref={countUpRef} />
-                        </VisibilitySensor>
-                      )}
-                    </CountUp>M
-                  </h2>
-                </div>
-                <p className="fw-bold pt-2">Active users</p>
-              </div>
-              <div className="col-7 col-md-4 mx-auto">
-                <div className="counter-item">
-                  <h2 className="fs-1">
-                  <CountUp start={0} end={20} duration="1.5">
-                      {({ countUpRef, start }) => (
-                        <VisibilitySensor onChange={start} delayedCall>
-                          <span ref={countUpRef} />
-                        </VisibilitySensor>
-                      )}
-                    </CountUp>M
-                  </h2>
-                </div>
-                <p className="fw-bold pt-2">Projects</p>
-              </div>
-              <div className="col-7 col-md-4 mx-auto">
-                <div className="counter-item">
-                  <h2 className="fs-1">
-                    <CountUp start={0} end={24} duration="1.5">
-                      {({ countUpRef, start }) => (
-                        <VisibilitySensor onChange={start} delayedCall>
-                          <span ref={countUpRef} />
-                        </VisibilitySensor>
-                      )}
-                    </CountUp>
-                    /<CountUp start={0} end={7} duration="1.5">
-                      {({ countUpRef, start }) => (
-                        <VisibilitySensor onChange={start} delayedCall>
-                          <span ref={countUpRef} />
-                        </VisibilitySensor>
-                      )}
-                    </CountUp>
-                  </h2>
-                </div>
-                <p className="fw-bold pt-2">Support</p>
-              </div>
+            <div className="row pt-5 text-center">
+              <CounterItem start={0} end={13000} itemName="Active Users"/>
+              <CounterItem start={0} end={20000} itemName="Projects"/>
+              <CounterItem start={0} end={5000} itemName="Teams"/>
             </div>
           </div>
           <div className="col-md-6 pt-5">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
@@ -11,10 +12,10 @@ export default function Footer() {
       <div className="container pt-5">
         <div className="row">
           <div className="col-md-4">
-            <a className="d-flex align-items-center text-white text-decoration-none pb-4" href>
+            <Link className="d-flex align-items-center text-white text-decoration-none pb-4" to="/">
               <img className="pe-2" src={logo} alt="" />
               <h1 className="d-inline-block logo-font">TASKIFY</h1>
-            </a>
+            </Link>
             <div className="d-flex pb-5 mb-5">
             <div className="bg-white rounded-circle me-4 bg-brand d-flex align-items-center justify-content-center">
             <FontAwesomeIcon className="brand"  icon={faFacebookF} />

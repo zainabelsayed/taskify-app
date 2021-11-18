@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom"
 import logo from "../../../assets/images/logo.png";
 import "./Navbar.css";
 
@@ -32,7 +33,7 @@ export default function Navbar() {
       }}
     >
       <div className="container">
-        <a className="navbar-brand d-flex align-items-center" href>
+        <Link className="navbar-brand d-flex align-items-center" to="/">
           <img className="pe-2" src={logo} alt="" />
           <h1
             className="d-inline-block logo-font"
@@ -43,7 +44,7 @@ export default function Navbar() {
           >
             TASKIFY
           </h1>
-        </a>
+        </Link>
         <div className="d-flex">
           <button
             className="btn btn-white me-3 rounded-pill shadow-sm"
