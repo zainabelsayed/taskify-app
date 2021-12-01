@@ -123,7 +123,7 @@ export default function AddTodoForm(props) {
                     <div className="d-flex align-items-baseline justify-content-start">
                       <input
                         type="text"
-                        className="form-control w-50 border-rad-1-3rem"
+                        className="form-control border-rad-1-3rem"
                         maxLength="11"
                         name="mobile"
                         value={formik.values.mobile}
