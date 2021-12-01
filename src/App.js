@@ -21,13 +21,30 @@ function App() {
     }
   };
 
+  const checkLogin = (to, from, next) => {
+    if (sessionStorage.getItem("user") === null) {
+      next.redirect("/login");
+    } else {
+      next.redirect("/user-board");
+    }
+  };
+
   return (
     <Router>
       <Switch>
-        <Route component={RegisterForm} path="/register" />
-        <Route component={LoginForm} path="/login" />
         <Route component={Home} path="/" exact />
+        <Route component={Home} path="/home" />
         <GuardProvider guards={[requireLogin]}>
+          <GuardedRoute
+            component={RegisterForm}
+            path="/register"
+            guards={[checkLogin]}
+          />
+          <GuardedRoute
+            component={LoginForm}
+            path="/login"
+            guards={[checkLogin]}
+          />
           <GuardedRoute
             component={UserBoard}
             path="/user-board"
