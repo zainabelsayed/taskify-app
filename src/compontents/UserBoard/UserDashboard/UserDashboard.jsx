@@ -5,7 +5,11 @@ import "./UserDashboard.css";
 import userImg from "../../../assets/images/user-img.jpg";
 import OverdueTasks from "./OverdueTasks";
 import UpcomingDeadLines from "./UpcomingDeadLines";
+import { Link } from "react-router-dom";
 export default function UserDashboard() {
+  const logout = () => {
+    sessionStorage.removeItem("user");
+  };
   return (
     <section>
       <div className="userProfile mb-2">
@@ -18,6 +22,22 @@ export default function UserDashboard() {
               {sessionStorage.getItem("user")}
             </h6>
             <p className="text-secondary fs-min">UI/UX Designer</p>
+          </div>
+          <div className="dropdown mb-4">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <Link to="/login" class="dropdown-item" onClick={logout}>
+                  Logout
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
