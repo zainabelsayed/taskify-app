@@ -7,6 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { app } from "../../firebase-config";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, child, get } from "firebase/database";
 
 import "../../css/main.css";
 import "../../css/util.css";
@@ -23,7 +24,6 @@ const LoginForm = () => {
   const history = useHistory();
 
   const onSubmit = (values) => {
-    sessionStorage.setItem("user", values.email);
     const authentication = getAuth();
     signInWithEmailAndPassword(authentication, values.email, values.password)
       .catch(function (error) {
@@ -37,7 +37,25 @@ const LoginForm = () => {
         } else alert(error.message);
       })
       .then((response) => {
-        if (response !== undefined) history.push("/user-board");
+        const dbRef = ref(getDatabase());
+        get(child(dbRef, `users/`))
+          .then((snapshot) => {
+            const arr = [];
+            Object.keys(snapshot.val()).forEach((key) =>
+              arr.push({
+                name: key,
+                data: snapshot.val()[key],
+              })
+            );
+            for (var i = 0; i < arr.length; i++) {
+              if (arr[i].data.email === values.email)
+                sessionStorage.setItem("user", arr[i].name);
+            }
+            if (response !== undefined) history.push("/user-board");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       });
   };
 

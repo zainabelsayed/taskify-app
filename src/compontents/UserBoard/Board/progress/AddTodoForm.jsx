@@ -2,12 +2,24 @@ import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { incrementNum } from "../../../redux/CounterRedux";
+import { getDatabase, ref, update } from "firebase/database";
 
 export default function AddTodoForm(props) {
   const { todo, setTodo } = props;
   const close = useRef();
   const [id, setId] = useState(0);
   const dispatch = useDispatch();
+
+  const createUser = () => {
+    const userName = sessionStorage.getItem("user");
+    const userMobile = formik.values.mobile;
+    const userProject = formik.values.projectName;
+
+    update(ref(getDatabase(), "users/" + userName), {
+      mobile: userMobile,
+      project: userProject,
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -24,6 +36,7 @@ export default function AddTodoForm(props) {
       dispatch(incrementNum(value.category));
       close.current.click();
       formik.resetForm();
+      createUser();
     },
   });
   return (
@@ -129,9 +142,16 @@ export default function AddTodoForm(props) {
                         name="mobile"
                         value={formik.values.mobile}
                         onChange={formik.handleChange}
+                        pattern="^01[0125][0-9]{8}$"
                         required
                       />
                     </div>
+                    {(!formik.values.mobile.match(/^01[0125][0-9]{8}$/) ||
+                      formik.values.mobile.length !== 11) && (
+                      <p className="mt-3 text-danger">
+                        Phone number is not valid
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
