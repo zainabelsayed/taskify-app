@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginForm from "./compontents/login/LoginForm";
+import RegisterForm from "./compontents/register/RegisterForm";
+import Home from "./compontents/HomePage/home/Home";
+import UserBoard from "./compontents/UserBoard/userBoard/UserBoard";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route component={RegisterForm} path="/register" />
+        <Route component={LoginForm} path="/login" />
+        <Route component={Home} path="/" exact />
+        <Route component={UserBoard} path="/user-board" exact />
+        <Route component={UserBoard} path="/user-board/:category" />;
+      </Switch>
+    </Router>
   );
 }
 
