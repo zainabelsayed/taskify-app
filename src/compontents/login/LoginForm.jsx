@@ -75,7 +75,7 @@ const LoginForm = () => {
                     ></span>
                   </div>
                   <LoginFormikErrorMessage name="email" />
-                  <div className="wrap-input100 m-b-23">
+                  <div className="wrap-input100 m-b-23 mt-5">
                     <LoginFormikField
                       label="Password"
                       name="password"
@@ -88,7 +88,7 @@ const LoginForm = () => {
                     ></span>
                   </div>
                   <LoginFormikErrorMessage name="password" />
-                  <div className="container-login100-form-btn">
+                  <div className="container-login100-form-btn mt-5">
                     <div className="wrap-login100-form-btn">
                       <div className="login100-form-bgbtn"></div>
                       <button type="submit" className="login100-form-btn">
