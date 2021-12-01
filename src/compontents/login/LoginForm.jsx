@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import LoginFormikField from "./LoginFormikField";
 import LoginFormikErrorMessage from "./LoginFormikErrorMessage";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { app } from "../../firebase-config";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -20,7 +20,10 @@ const LoginForm = () => {
     password: "",
   };
 
+  const history = useHistory();
+
   const onSubmit = (values) => {
+    sessionStorage.setItem("user", values.email);
     const authentication = getAuth();
     signInWithEmailAndPassword(authentication, values.email, values.password)
       .catch(function (error) {
@@ -34,7 +37,7 @@ const LoginForm = () => {
         } else alert(error.message);
       })
       .then((response) => {
-        if (response !== undefined) alert("Logged In");
+        if (response !== undefined) history.push("/user-board");
       });
   };
 

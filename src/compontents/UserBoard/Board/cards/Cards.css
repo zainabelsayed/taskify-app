@@ -1,0 +1,41 @@
+.body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.ProgressBar{
+    height: 2px !important;
+    background-color: #00EEFF !important;
+}
+.text-todo{
+    color: #00EEFF;
+}
+.progress-todo{
+    background-color: #00EEFF;
+}
+.progress-bar{
+    width: 50%;
+}
+.col-7 img{
+    width: 2.7rem !important;
+    height: 2.7rem !important;
+    margin-right: -0.5rem !important;
+}
+.fs-min{
+    font-size: 0.7rem;
+}
+.progress-inprogress{
+    background-color: #FCD129;
+}
+.text-inprogress{
+    color: #FCD129;
+}
+.progressDone{
+    background-color: #F476A3;
+}
+.text-done{
+    color: #F476A3;
+}
+.close-btn:hover{
+    background-color: transparent !important;
+}
