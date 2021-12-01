@@ -124,7 +124,7 @@ export default function AddTodoForm(props) {
                       <input
                         type="text"
                         className="form-control w-50 border-rad-1-3rem"
-                        minLength="11"
+                        maxLength="11"
                         name="mobile"
                         value={formik.values.mobile}
                         onChange={formik.handleChange}
