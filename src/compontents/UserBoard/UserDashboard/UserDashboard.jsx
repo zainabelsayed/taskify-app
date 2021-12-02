@@ -33,7 +33,7 @@ export default function UserDashboard() {
             ></button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
-                <Link to="/login" class="dropdown-item" onClick={logout}>
+                <Link to="/login" className="dropdown-item" onClick={logout}>
                   Logout
                 </Link>
               </li>

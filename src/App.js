@@ -23,7 +23,7 @@ function App() {
 
   const checkLogin = (to, from, next) => {
     if (sessionStorage.getItem("user") === null) {
-      next.redirect("/login");
+      next();
     } else {
       next.redirect("/user-board");
     }
