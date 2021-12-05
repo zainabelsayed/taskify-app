@@ -37,25 +37,29 @@ const LoginForm = () => {
         } else alert(error.message);
       })
       .then((response) => {
-        const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/`))
-          .then((snapshot) => {
-            const arr = [];
-            Object.keys(snapshot.val()).forEach((key) =>
-              arr.push({
-                name: key,
-                data: snapshot.val()[key],
-              })
-            );
-            for (var i = 0; i < arr.length; i++) {
-              if (arr[i].data.email === values.email)
-                sessionStorage.setItem("user", arr[i].name);
-            }
-            if (response !== undefined) history.push("/user-board");
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        if (response !== undefined) {
+          const dbRef = ref(getDatabase());
+          get(child(dbRef, `users/`))
+            .then((snapshot) => {
+              if (snapshot !== undefined) {
+                const arr = [];
+                Object.keys(snapshot.val()).forEach((key) =>
+                  arr.push({
+                    name: key,
+                    data: snapshot.val()[key],
+                  })
+                );
+                for (var i = 0; i < arr.length; i++) {
+                  if (arr[i].data.email === values.email)
+                    sessionStorage.setItem("user", arr[i].name);
+                }
+                history.push("/user-board");
+              }
+            })
+            .catch((error) => {
+              alert("Firebase is undefined.");
+            });
+        }
       });
   };
 

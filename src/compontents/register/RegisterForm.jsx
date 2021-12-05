@@ -16,7 +16,7 @@ import { faGooglePlusG } from "@fortawesome/free-brands-svg-icons";
 // eslint-disable-next-line no-unused-vars
 import { app } from "../../firebase-config";
 import RegisterFormikErrorMessage from "./RegisterFormikErrorMessage";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, child, get, set } from "firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -39,23 +39,45 @@ const RegisterForm = () => {
   const history = useHistory();
 
   const onSubmit = (values) => {
-    const authentication = getAuth();
-    createUserWithEmailAndPassword(
-      authentication,
-      values.email,
-      values.password
-    ).then((response) => {
-      if (response !== undefined) history.push("/user-board");
-    });
-    alert("Registered Successfuly!");
-    set(ref(getDatabase(), "users/" + values.username), {
-      fullname: values.fullname,
-      email: values.email,
-      password: values.password,
-      mobile: "",
-      project: "",
-    });
-    sessionStorage.setItem("user", values.username);
+    const dbRef = ref(getDatabase());
+    var found = 0;
+    get(child(dbRef, `users/`))
+      .then((snapshot) => {
+        const arr = Object.keys(snapshot.val());
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] === values.username) {
+            alert("Username is already used!");
+            found = 1;
+            break;
+          }
+        }
+        if (found === 0) {
+          const authentication = getAuth();
+          createUserWithEmailAndPassword(
+            authentication,
+            values.email,
+            values.password
+          )
+            .then((response) => {
+              set(ref(getDatabase(), "users/" + values.username), {
+                fullname: values.fullname,
+                email: values.email,
+                password: values.password,
+                mobile: "",
+                project: "",
+              });
+              sessionStorage.setItem("user", values.username);
+              if (response !== undefined) history.push("/user-board");
+            })
+            .catch((error) => {
+              if (error.code === "auth/email-already-in-use")
+                alert("Email is already used!");
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const onGmail = () => {
