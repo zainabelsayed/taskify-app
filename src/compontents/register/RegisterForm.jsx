@@ -59,15 +59,17 @@ const RegisterForm = () => {
             values.password
           )
             .then((response) => {
-              set(ref(getDatabase(), "users/" + values.username), {
-                fullname: values.fullname,
-                email: values.email,
-                password: values.password,
-                mobile: "",
-                project: "",
-              });
-              sessionStorage.setItem("user", values.username);
-              if (response !== undefined) history.push("/user-board");
+              if (response !== undefined) {
+                set(ref(getDatabase(), "users/" + values.username), {
+                  fullname: values.fullname,
+                  email: values.email,
+                  password: values.password,
+                  mobile: "",
+                  project: "",
+                });
+                sessionStorage.setItem("user", values.username);
+                history.push("/user-board");
+              }
             })
             .catch((error) => {
               if (error.code === "auth/email-already-in-use")
