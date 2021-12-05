@@ -1,0 +1,30 @@
+.userDashboard{
+    width: 15rem;
+    background-color: #595de5;
+    border-radius: 1.5rem;
+}
+.fs-min{
+    font-size: 0.8rem;
+}
+.CircularProgressbar-path {
+    margin: 0 auto;
+    stroke:#00eeff !important;
+    width: 50%;
+    height: 50%;
+  }
+  .CircularProgressbar-trail {
+    stroke: #339bf0 !important;
+  }
+  .CircularProgressbar-text {
+    fill: white !important;
+    font-size: 1.3rem !important;
+    stroke: white !important;
+  }
+  .CircularProgressbar-background {
+    fill: white!important;
+  }
+  .text-cyan{
+      color:#00eeff;
+      font-size: 0.75rem;
+  }
+  

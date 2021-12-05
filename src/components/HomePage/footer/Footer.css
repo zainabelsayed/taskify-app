@@ -1,0 +1,47 @@
+:root{
+    --color-primary: #f476a3;
+} 
+footer{
+    background-color: #3d3a4b;
+}
+.logo-font{
+    font-family: 'Squada One', cursive;
+}
+.bg-brand{
+    width: 1.7rem;
+    height: 1.7rem;
+    display: inline-block;
+    transition: 0.3s ease-in-out;
+}
+.brand{
+    transition: 0.3s ease-in-out;
+    color: #3d3a4b;
+}
+.bg-brand:hover{
+    cursor: pointer;
+    background-color: var(--color-primary) !important;
+}
+.bg-brand:hover .brand{
+    color: white !important;
+}
+.m-in{
+    position: absolute;
+    top: 3.5%;
+    right: 1%;
+    z-index: 10;
+    background-color: var(--color-primary) !important;
+    border:none;
+    transition: 0.3s ease-in-out;
+}
+.m-in:hover{
+    background-color: #B24A64 !important;
+    cursor: pointer;
+}
+.p-input{
+    padding:0.6rem 1.5rem !important;
+    background-color: transparent !important;
+    background-color: rgba(247, 201, 218,.2) !important;
+}
+.p-input::placeholder{
+    color: white !important;
+}

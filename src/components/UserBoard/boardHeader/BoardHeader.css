@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.m-head {
+  position: absolute;
+  top: 8.1%;
+  right: 1.5%;
+  z-index: 10;
+  border: none;
+  transition: 0.3s ease-in-out;
+  background-color: #595de5 !important;
+  border: 1px solid #595de5 !important;
+}
+.m-add {
+  position: absolute;
+  top: 8.1%;
+  right: 12%;
+  z-index: 10;
+  border: none;
+  transition: 0.3s ease-in-out;
+  background-color: #595de5 !important;
+  border: 1px solid #595de5 !important;
+}
+.m-head:hover {
+  background-color: #494dc0 !important;
+  cursor: pointer;
+}
+.input-head {
+  padding: 0.6rem 1rem !important;
+  border: 1px solid #595de5 !important;
+  transition: 0.3s ease-in-out;
+}
+.profile-width {
+  width: 14rem;
+}
+.icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-image: linear-gradient(
+    225deg,
+    rgba(252, 0, 255, 1) 30%,
+    rgba(0, 219, 222, 1) 70%,
+    rgba(0, 212, 255, 1) 90%
+  );
+  color: #fff;
+  padding: 0.3rem;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+.icon:hover{
+  background-image: linear-gradient(
+    45deg,
+    rgba(252, 0, 255, 0.8) 30%,
+    rgba(0, 219, 222, 0.8) 65%,
+    rgba(0, 212, 255, 0.8) 90%
+  );
+}
