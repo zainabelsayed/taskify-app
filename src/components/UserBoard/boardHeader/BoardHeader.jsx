@@ -6,6 +6,8 @@ import { addMemberAction } from "../../store/projectMembersStore";
 import { removeMemberAction } from "../../store/projectMembersStore"
 import { database } from "../../../firebase-config";
 import { ref, set, get, child } from "firebase/database";
+import ReactTooltip from 'react-tooltip';
+
 import logo from "../../../assets/images/logo.png";
 import userImg from "../../../assets/images/user-img.jpg";
 import "./BoardHeader.css";
@@ -136,9 +138,15 @@ export default function BoardHeader() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 id={memberMail.email}
+                data-tip
+                data-for={memberMail.email}
               >
+                <ReactTooltip id={memberMail.email} type="light" border="true" borderColor="#f476a3" place="bottom">
+                  <span>{memberMail.email}</span>
+                </ReactTooltip>
                 {memberMail.email.charAt(0)}
               </button>
+              
               <ul class="dropdown-menu">
                 <li
                   className="text-danger fs-min ps-2"

@@ -10,6 +10,7 @@ import emailjs from "emailjs-com";
 import ProgressBar from "../progress-bar/Progress-bar";
 import "./Cards.css";
 import AddTodoForm from "../progress/AddTodoForm";
+import ReactTooltip from 'react-tooltip';
 
 function Cards(props) {
   const card = useRef();
@@ -216,14 +217,25 @@ function Cards(props) {
                 {item.taskMembers?.length > 0
                   ? item.taskMembers.map((memberMail, index) => (
                       <div key={index}>
-                          <button
-                            type="button"
-                            className="border-0 mem-icon fw-bold fs-min shadow-sm"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            {memberMail.charAt(0)}
-                          </button>
+                        <button
+                          type="button"
+                          className="border-0 mem-icon fw-bold fs-min shadow-sm"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          data-tip
+                          data-for={memberMail}
+                        >
+                          {memberMail.charAt(0)}
+                        </button>
+                        <ReactTooltip
+                          id={memberMail}
+                          type="light"
+                          border="true"
+                          borderColor="#f476a3"
+                          place="bottom"
+                        >
+                          <span>{memberMail}</span>
+                        </ReactTooltip>
                         <ul class="dropdown-menu">
                           <li
                             className="text-danger fs-min px-2"

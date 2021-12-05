@@ -203,7 +203,6 @@ export default function FormArray(props) {
                             className="btn bg-voilet rounded-pill text-white my-3"
                             onClick={() => itemsArrayHelper.push("")}
                           >
-                            {/* show this when user has removed all friends from the list */}
                             Add Item
                           </button>
                         )}
@@ -219,7 +218,6 @@ export default function FormArray(props) {
               className="btn bg-voilet rounded-pill text-white mb-3"
               onClick={() => arrayHelpers.push("")}
             >
-              {/* show this when user has removed all friends from the list */}
               Add checklist
             </button>
           )}

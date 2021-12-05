@@ -72,8 +72,7 @@ export default function UserDashboard(props) {
       
     }
     console.log(tasks);
-    const updatedTasks = tasks
-    setTasks([...updatedTasks])
+    
     const upcomingTasks = tasks.filter(task=> task.upcoming)
     const overdueTasks = tasks.filter(task => task.overdue)
     setUpcomming([...upcomingTasks])
@@ -99,10 +98,10 @@ export default function UserDashboard(props) {
       setPercentDone((doneCount / tasks.length) * 100);
     }
   };
-  useEffect(()=>{
-    updateDiff();
-  },[percentDone,doneCount])
+  // useEffect(()=>{
+  // },[percentDone,doneCount])
   useEffect(() => {
+    updateDiff();
     checkPercentage();
   }, [tasks, lists, percentDone, doneCount, doneId]);
   return (
