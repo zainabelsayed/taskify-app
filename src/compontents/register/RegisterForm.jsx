@@ -85,20 +85,22 @@ const RegisterForm = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(authentication, googleProvider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // eslint-disable-next-line no-unused-vars
-        const token = credential.accessToken;
-        // eslint-disable-next-line no-unused-vars
-        const user = result.user;
-        set(ref(getDatabase(), "users/" + user.displayName), {
-          fullname: "",
-          email: user.email,
-          password: "",
-          mobile: "",
-          project: "",
-        });
-        sessionStorage.setItem("user", user.displayName);
-        if (result !== undefined) history.push("/user-board");
+        if (result !== undefined) {
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          // eslint-disable-next-line no-unused-vars
+          const token = credential.accessToken;
+          // eslint-disable-next-line no-unused-vars
+          const user = result.user;
+          set(ref(getDatabase(), "users/" + user.displayName), {
+            fullname: "",
+            email: user.email,
+            password: "",
+            mobile: "",
+            project: "",
+          });
+          sessionStorage.setItem("user", user.displayName);
+          history.push("/user-board");
+        }
       })
       .catch((error) => {
         // eslint-disable-next-line no-unused-vars
