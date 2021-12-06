@@ -1,0 +1,43 @@
+.todo-bg{
+    background-color: #00EEFF;
+}
+.in-prog-bg{
+    background-color: #FCD129;
+}
+.done-bg{
+    background-color: #F476A3;
+}
+.todo-plus,
+.in-prog-plus,
+.done-plus,
+.todo-plus:hover,
+.in-prog-plus:hover,
+.done-plus:hover{
+    width: 3rem;
+    height: 3rem;
+    background-color: white !important;
+}
+.todo-plus, .todo-plus:hover{
+    color: #00EEFF;
+    border: 3px #00EEFF dashed;
+}
+.in-prog-plus, .in-prog-plus:hover{
+    color: #FCD129;
+    border: 3px #FCD129 dashed;
+}
+.done-plus, .done-plus:hover{
+    color: #F476A3;
+    border: 3px #F476A3 dashed;
+}
+.border-rad-1-3rem{
+    border-radius: 1.3rem !important;
+}
+.rounded-5{
+    border-radius: 0.8rem;
+}
+.bg-voilet{
+ background-color: #595de5 !important;
+}
+.bg-voilet:hover{
+    background-color: #494dc0 !important;
+}

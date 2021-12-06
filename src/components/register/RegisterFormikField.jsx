@@ -1,6 +1,5 @@
 import React from "react";
 import { Field } from "formik";
-import RegisterFormikErrorMessage from "./RegisterFormikErrorMessage";
 
 const RegisterFormikField = ({ name, type, label }) => {
   return (
