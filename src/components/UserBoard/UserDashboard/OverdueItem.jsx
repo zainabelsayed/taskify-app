@@ -1,12 +1,12 @@
 import React from "react";
 
 export default function Overdue(props) {
-    const {color, task, days} = props
+    const {textColor, task,overdue} = props
   return (
     <>
-      <div className="d-flex justify-content-between mb-2" style={{color:color}}>
-        <p className="p-0 m-0">{task}</p>
-        <p className="p-0 m-0">{days}days</p>
+      <div className={`d-flex justify-content-between mb-2 ${textColor}`}>
+        <p className="p-0 m-0 fs-min">{task}</p>
+        <p className="p-0 m-0 fs-min">{overdue} {overdue > 1 ? "days" : "day"} ago</p>
       </div>
     </>
   );
