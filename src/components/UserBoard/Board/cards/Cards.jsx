@@ -36,14 +36,14 @@ function Cards(props) {
     get(child(dbRef, "users/"))
       .then((snapshot) => {
         arr = Object.keys(snapshot.val());
-        //setMembers(arr)
+        setMembers(arr)
         //arr[i] da el username
 
       })
       .catch((error) => {
         console.error(error);
       })
-    }, [members]);
+   }, []);
 
 console.log(members)
   const onWhatsapp = () => {
@@ -54,7 +54,7 @@ console.log(members)
       console.log(data)
       
       console.log(data[0].mobile_number)//dh rkm el mobile
-      // window.location = `https://wa.me/2${data[0].mobile_number}`
+      window.open(`https://wa.me/2${data[0].mobile_number}`, '_blank')
 
     });
 
