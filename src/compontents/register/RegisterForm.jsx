@@ -17,6 +17,7 @@ import { faGooglePlusG } from "@fortawesome/free-brands-svg-icons";
 import { app } from "../../firebase-config";
 import RegisterFormikErrorMessage from "./RegisterFormikErrorMessage";
 import { getDatabase, ref, child, get, set } from "firebase/database";
+import { v4 as uuidv4 } from "uuid";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -61,11 +62,11 @@ const RegisterForm = () => {
             .then((response) => {
               if (response !== undefined) {
                 set(ref(getDatabase(), "users/" + values.username), {
+                  userID: uuidv4(),
                   fullname: values.fullname,
                   email: values.email,
                   password: values.password,
                   mobile: "",
-                  project: "",
                 });
                 sessionStorage.setItem("user", values.username);
                 history.push("/user-board");
@@ -94,6 +95,7 @@ const RegisterForm = () => {
           // eslint-disable-next-line no-unused-vars
           const user = result.user;
           set(ref(getDatabase(), "users/" + user.displayName), {
+            userID: uuidv4(),
             fullname: "",
             email: user.email,
             password: "",

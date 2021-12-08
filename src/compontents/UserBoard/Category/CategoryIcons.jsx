@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 export default function CategoryIcons(props) {
   const { icon, name } = props;
-  let counter;
   let workCounter = useSelector((state) => state.counterReducer.workCounter);
   let familyCounter = useSelector(
     (state) => state.counterReducer.familyCounter
@@ -20,11 +19,12 @@ export default function CategoryIcons(props) {
     (state) => state.counterReducer.friendsCounter
   );
 
-  if (name === "Work") counter = workCounter;
-  else if (name === "Family") counter = familyCounter;
-  else if (name === "Personal") counter = personalCounter;
-  else if (name === "Business") counter = businessCounter;
-  else counter = friendsCounter;
+  let categoryCounter;
+  if (name === "Work") categoryCounter = workCounter;
+  else if (name === "Family") categoryCounter = familyCounter;
+  else if (name === "Personal") categoryCounter = personalCounter;
+  else if (name === "Business") categoryCounter = businessCounter;
+  else categoryCounter = friendsCounter;
 
   return (
     <Link to={`/user-board/${name}`}>
@@ -33,7 +33,7 @@ export default function CategoryIcons(props) {
           <FontAwesomeIcon icon={icon} />
         </span>
         <span className="me-5"> {name}</span>
-        <span className="bg-icon px-2">{counter}</span>
+        <span className="bg-icon px-2">{categoryCounter}</span>
       </div>
     </Link>
   );

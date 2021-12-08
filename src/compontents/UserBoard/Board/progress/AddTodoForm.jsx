@@ -1,24 +1,43 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
+import { getDatabase, ref, set, get, child, update } from "firebase/database";
 import { useDispatch } from "react-redux";
 import { incrementNum } from "../../../redux/CounterRedux";
-import { getDatabase, ref, update } from "firebase/database";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddTodoForm(props) {
   const { todo, setTodo } = props;
   const close = useRef();
-  const [id, setId] = useState(0);
+  const userName = sessionStorage.getItem("user");
   const dispatch = useDispatch();
 
-  const createUser = () => {
-    const userName = sessionStorage.getItem("user");
-    const userMobile = formik.values.mobile;
-    const userProject = formik.values.projectName;
-
-    update(ref(getDatabase(), "users/" + userName), {
-      mobile: userMobile,
-      project: userProject,
+  const createProject = (id, value) => {
+    let projectId = uuidv4();
+    set(ref(getDatabase(), `users/${userName}/projects/` + id), {
+      projectID: projectId,
+      projectName: value.projectName,
+      description: value.description,
+      category: value.category,
+      duration: value.duration,
+      whatsapp: value.whatsapp,
+      percent: 0,
     });
+
+    setTodo([
+      ...todo,
+      {
+        name: id,
+        data: {
+          projectID: projectId,
+          projectName: value.projectName,
+          description: value.description,
+          category: value.category,
+          duration: value.duration,
+          whatsapp: value.whatsapp,
+          percent: 0,
+        },
+      },
+    ]);
   };
 
   const formik = useFormik({
@@ -31,14 +50,39 @@ export default function AddTodoForm(props) {
       mobile: "",
     },
     onSubmit: (value) => {
-      setId(id + 1);
-      setTodo([...todo, { id: `id${id}`, ...value, percent: 0 }]);
       dispatch(incrementNum(value.category));
+      const userMobile = formik.values.mobile;
+      update(ref(getDatabase(), "users/" + userName), {
+        mobile: userMobile,
+      });
+
+      get(child(ref(getDatabase()), `users/${userName}/projects/`))
+        .then((snapshot) => {
+          let id = 0;
+          if (snapshot !== undefined) {
+            const arr = [];
+            Object.keys(snapshot.val()).forEach((key) =>
+              arr.push({
+                name: key,
+                data: snapshot.val()[key],
+              })
+            );
+            id = parseInt(arr[arr.length - 1].name) + 1;
+          }
+          createProject(id, value);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (todo.length === 0) {
+            createProject(0, value);
+          }
+        });
+
       close.current.click();
       formik.resetForm();
-      createUser();
     },
   });
+
   return (
     <div
       className="modal fade"

@@ -1,10 +1,10 @@
 import React from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
+// import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "./UserDashboard.css";
 import userImg from "../../../assets/images/user-img.jpg";
-import OverdueTasks from "./OverdueTasks";
-import UpcomingDeadLines from "./UpcomingDeadLines";
+// import OverdueTasks from "./OverdueTasks";
+// import UpcomingDeadLines from "./UpcomingDeadLines";
 import { Link } from "react-router-dom";
 export default function UserDashboard() {
   const logout = () => {
@@ -14,16 +14,16 @@ export default function UserDashboard() {
     <section>
       <div className="userProfile mb-2">
         <div className="d-flex align-items-center justify-content-between">
-          <figure className="w-25">
+          <figure className="w-25 mb-0">
             <img className="rounded-circle w-100" src={userImg} alt="" />
           </figure>
-          <div className="text-start w-75 ms-3">
+          <div className="text-start w-50 ms-3">
             <h6 className="mb-0 fw-bold fs-5">
               {sessionStorage.getItem("user")}
             </h6>
-            <p className="text-secondary fs-min">UI/UX Designer</p>
+            {/* <p className="text-secondary fs-min">UI/UX Designer</p> */}
           </div>
-          <div className="dropdown mb-4">
+          <div className="dropdown w-25">
             <button
               className="btn btn-secondary dropdown-toggle"
               type="button"
@@ -41,7 +41,7 @@ export default function UserDashboard() {
           </div>
         </div>
       </div>
-      <div className="userDashboard">
+      {/* <div className="userDashboard">
         <div className="precentage-progress px-4 py-1 text-center">
           <CircularProgressbar
             className="d-flex justify-content-center py-3
@@ -57,7 +57,7 @@ export default function UserDashboard() {
         </div>
       </div>
       <UpcomingDeadLines />
-      <OverdueTasks />
+      <OverdueTasks /> */}
     </section>
   );
 }

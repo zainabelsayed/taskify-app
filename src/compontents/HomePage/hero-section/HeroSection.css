@@ -1,0 +1,61 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --color-primary: #f476a3;
+}
+.bg-gradientt{
+    /* background-image: linear-gradient(to right,rgba(89,93,229),rgba(171, 171, 187)); */
+    background-image: url('../../../assets/images/bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.color-primary{
+    color: var(--color-primary);
+}
+.m-in{
+    position: absolute;
+    top: 3.5%;
+    right: 1.5%;
+    z-index: 10;
+    background-color: var(--color-primary) !important;
+    border:none;
+    transition: 0.3s ease-in-out;
+}
+.m-in:hover{
+    background-color: #B24A64 !important;
+    cursor: pointer;
+}
+.p-input{
+    padding:0.6rem 0rem !important;
+    background-color: transparent !important;
+    background-color: rgba(247, 201, 218,.2) !important;
+}
+.p-input::placeholder{
+    color: white !important;
+}
+.hero-image{
+    object-fit: contain;
+    position: absolute;
+    top: 57%;
+}
+.hero-image img{
+    width: 100%;
+}
+.line-height{
+    line-height: 1rem;
+}
+@media screen and (max-width:1280px) {
+    .hero-image{
+        top: 40%;
+    }
+}
+@media screen and (max-width:1024px) {
+    .hero-image{
+        top: 35%;
+    }
+}

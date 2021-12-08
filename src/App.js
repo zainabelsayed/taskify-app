@@ -56,6 +56,11 @@ function App() {
             path="/user-board/:category"
             meta={{ auth: true }}
           />
+          <GuardedRoute
+            component={UserBoard}
+            path="/user-board/:category/:projectID"
+            meta={{ auth: true }}
+          />
         </GuardProvider>
       </Switch>
     </Router>
