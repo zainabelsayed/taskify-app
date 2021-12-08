@@ -1,15 +1,14 @@
 import emailjs from "emailjs-com";
-import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addMemberAction } from "../../store/projectMembersStore";
-import { removeMemberAction } from "../../store/projectMembersStore";
 import { database } from "../../../firebase-config";
-import { ref, set, get, child } from "firebase/database";
-import ReactTooltip from "react-tooltip";
+import { ref, set} from "firebase/database";
+import { Link } from "react-router-dom";
+import { addMemberAction } from "../../store/projectMembersStore";
 import logo from "../../../assets/images/logo.png";
 import userImg from "../../../assets/images/user-img.jpg";
 import "./BoardHeader.css";
+import ProjectMembers from "./ProjectMembers";
 
 export default function BoardHeader() {
   const dispatch = useDispatch();
@@ -19,6 +18,10 @@ export default function BoardHeader() {
   const project_name = "Graduation Project";
   const mailRef = useRef();
   const mailError = useRef();
+  /* -------------------------------------------------------------------------- */
+  /*                getting project members data from redux store               */
+  /* -------------------------------------------------------------------------- */
+  let projectMembers = useSelector((state) => state.projectMembers);
   /* -------------------------------------------------------------------------- */
   /*                               validate email                               */
   /* -------------------------------------------------------------------------- */
@@ -30,40 +33,6 @@ export default function BoardHeader() {
       );
   };
 
-  /* -------------------------------------------------------------------------- */
-  /*                getting project members data from redux store               */
-  /* -------------------------------------------------------------------------- */
-  let projectMembers = useSelector((state) => state.projectMembers);
-
-  /* -------------------------------------------------------------------------- */
-  /*                 getting project members data from firebase                 */
-  /* -------------------------------------------------------------------------- */
-  useEffect(() => {
-    const dbRef = ref(database);
-    get(child(dbRef, "project-members"))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          setMember(snapshot.val());
-          console.log(member, projectMembers);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [projectMembers]);
-
-  useEffect(() => {
-    member.map((member) => {
-      if (!projectMembers.includes(member.email)) {
-        dispatch(addMemberAction(member.email));
-      }
-    });
-    console.log(member, projectMembers);
-  }, [member, projectMembers]);
-
-  console.log(member, projectMembers);
   /* -------------------------------------------------------------------------- */
   /*                       to send the invitation email                       */
   /* -------------------------------------------------------------------------- */
@@ -84,7 +53,7 @@ export default function BoardHeader() {
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     }
-    console.log(projectMembers);
+    console.log(projectMembers,member);
   };
   /* -------------------------------------------------------------------------- */
   /*                    write projectMembers data to database                   */
@@ -96,24 +65,6 @@ export default function BoardHeader() {
     });
     console.log(member);
   }
-  /* -------------------------------------------------------------------------- */
-  /*                            remove project member                           */
-  /* -------------------------------------------------------------------------- */
-  function writeMembersData() {
-    set(ref(database, "/project-members"), {
-      ...member,
-    });
-  }
-  const removeMember = (memberMail) => {
-    console.log(memberMail.email, memberMail);
-    member.splice(member.indexOf(memberMail), 1);
-    dispatch(removeMemberAction(memberMail.email));
-    const newMembers = member;
-    setMember([...newMembers]);
-    writeMembersData();
-    console.log(member, projectMembers);
-  };
-
   return (
     <div className="my-3 justify-content-between align-items-baseline d-flex">
       <div className="col-md-2">
@@ -133,40 +84,11 @@ export default function BoardHeader() {
           className="input-group bg-transparent align-items-center"
           onSubmit={(e) => sendIvite(e)}
         >
-          {member.map((memberMail, index) => (
-            <div key={index}>
-              <button
-                type="button"
-                className="icon fw-bold shadow-sm border-0"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                id={memberMail.email}
-                data-tip
-                data-for={memberMail.email}
-              >
-                {memberMail.email.charAt(0)}
-              </button>
-              <ReactTooltip
-                id={memberMail.email}
-                type="light"
-                border="true"
-                borderColor="#f476a3"
-                place="bottom"
-              >
-                <span>{memberMail.email}</span>
-              </ReactTooltip>
-              <ul class="dropdown-menu">
-                <li
-                  className="text-danger fs-min ps-2"
-                  onClick={(e) => {
-                    removeMember(memberMail);
-                  }}
-                >
-                  Remove
-                </li>
-              </ul>
-            </div>
-          ))}
+          <ProjectMembers
+          member={member}
+          setMember={setMember}
+          projectMembers={projectMembers}
+          />
           <input
             ref={mailRef}
             type="email"
