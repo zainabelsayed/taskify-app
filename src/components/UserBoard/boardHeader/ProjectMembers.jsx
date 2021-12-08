@@ -58,7 +58,7 @@ export default function ProjectMembers(props) {
 
 
   return (
-    <div>
+    <div className="d-flex">
       {member.map((memberMail, index) => (
         <div key={index}>
           <button
