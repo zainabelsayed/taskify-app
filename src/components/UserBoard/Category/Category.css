@@ -1,0 +1,34 @@
+.logo-font {
+    font-family: 'Squada One', cursive;
+}
+
+.category {
+    width: 14rem;
+    background-color: #595de5;
+    border-radius: 1.5rem;
+}
+
+.category-div {
+    transition: 0.3s ease-in-out;
+}
+
+.bg-icon {
+    background-color: #6a6ee8;
+    border-radius: 0.2rem;
+    padding: 0.1rem 0.3rem;
+    transition: 0.1s ease-in-out;
+}
+
+.category-div:hover {
+    background-color: white;
+    color: black !important;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    align-items: center !important;
+    justify-content: space-between !important;
+    cursor: pointer;
+}
+
+.category-div:hover .bg-icon {
+    background-color: transparent;
+}

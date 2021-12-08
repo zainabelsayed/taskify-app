@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import LoginForm from "./compontents/login/LoginForm";
-import RegisterForm from "./compontents/register/RegisterForm";
-import Home from "./compontents/HomePage/home/Home";
-import UserBoard from "./compontents/UserBoard/userBoard/UserBoard";
+import LoginForm from "./components/login/LoginForm";
+import RegisterForm from "./components/register/RegisterForm";
+import Home from "./components/HomePage/home/Home";
+import UserProjectBoard from "./components/UserBoard/userBoard/UserProjectBoard";
+import UserBoard from "./components/UserBoard/userBoard/UserBoard";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,7 +26,7 @@ function App() {
     if (sessionStorage.getItem("user") === null) {
       next();
     } else {
-      next.redirect("/user-board");
+      next.redirect("/user-project-board");
     }
   };
 
@@ -46,19 +47,19 @@ function App() {
             guards={[checkLogin]}
           />
           <GuardedRoute
-            component={UserBoard}
-            path="/user-board"
+            component={UserProjectBoard}
+            path="/user-project-board"
             exact
             meta={{ auth: true }}
           />
           <GuardedRoute
-            component={UserBoard}
-            path="/user-board/:category"
+            component={UserProjectBoard}
+            path="/user-project-board/:category"
             meta={{ auth: true }}
           />
           <GuardedRoute
             component={UserBoard}
-            path="/user-board/:category/:projectID"
+            path="/:category/:projectID/tasks"
             meta={{ auth: true }}
           />
         </GuardProvider>
