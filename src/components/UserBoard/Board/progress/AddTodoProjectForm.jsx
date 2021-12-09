@@ -153,7 +153,7 @@ export default function AddTodoProjectForm(props) {
                   <input
                     type="number"
                     className="form-control w-25 border-rad-1-3rem"
-                    min="0"
+                    min="1"
                     name="duration"
                     value={formik.values.duration}
                     onChange={formik.handleChange}

@@ -7,14 +7,7 @@ import person2 from "../../../../assets/images/person2.jpg";
 import person3 from "../../../../assets/images/person3.jpg";
 import { useRef } from "react/cjs/react.development";
 import { useEffect, useState } from "react";
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  update,
-  onValue,
-} from "firebase/database";
+import { getDatabase, ref, child, get, update } from "firebase/database";
 import { useDispatch } from "react-redux";
 import { decrementNum } from "../../../redux/CounterRedux";
 import { Link } from "react-router-dom";
@@ -28,15 +21,13 @@ function ProjectCards(props) {
   const projectCard = useRef();
   const { textColor, percent, progressColor, item, todo, setTodo } = props;
   const dispatch = useDispatch();
+  const [members, setMembers] = useState([]);
   const userName = sessionStorage.getItem("user");
 
   var category = useParams().category;
   if (category === undefined) category = "Work";
-  const [members, setMembers] = useState([]);
 
-  // useEffect(() => {}, [todo]);
-
-  const deleteTodo = (e) => {
+  const deleteTodo = () => {
     projectCard.current.style.display = "none";
     dispatch(decrementNum(item.data.category));
     const userName = sessionStorage.getItem("user");
@@ -48,27 +39,40 @@ function ProjectCards(props) {
       duration: null,
       whatsapp: null,
       percent: null,
+    }).then(() => {
+      get(child(ref(getDatabase()), `users/${userName}/projects/`))
+        .then((snapshot) => {
+          if (snapshot !== undefined) {
+            const arr = [];
+            Object.keys(snapshot.val()).forEach((key) =>
+              arr.push({
+                name: key,
+                data: snapshot.val()[key],
+              })
+            );
+            setTodo(arr);
+          }
+        })
+        .catch((error) => {
+          setTodo([]);
+          console.log(error);
+        });
     });
 
-    update(ref(getDatabase(), `project-members/${item.data.projectID}`), {
-      email: null,
-    });
-
-    get(child(ref(getDatabase()), `users/${userName}/projects/`))
+    get(child(ref(getDatabase()), `project-members/`))
       .then((snapshot) => {
         if (snapshot !== undefined) {
-          const arr = [];
-          Object.keys(snapshot.val()).forEach((key) =>
-            arr.push({
-              name: key,
-              data: snapshot.val()[key],
-            })
-          );
-          setTodo(arr);
+          snapshot.val().forEach((invitedProject, index) => {
+            if (invitedProject.projectID === item.data.projectID) {
+              update(ref(getDatabase(), `project-members/${index}`), {
+                email: null,
+                projectID: null,
+              });
+            }
+          });
         }
       })
       .catch((error) => {
-        setTodo([]);
         console.log(error);
       });
   };
@@ -84,19 +88,25 @@ function ProjectCards(props) {
             data: snapshot.val()[key],
           })
         );
-        setMembers(arr);
-        //arr[i] da el username
+        const newArr = [];
+        arr.forEach((elem) => {
+          if (elem.data.projects !== undefined) {
+            elem.data.projects.forEach((project) => {
+              if (project.projectID === item.data.projectID) {
+                newArr.push({ name: elem.name, mobile: elem.data.mobile });
+              }
+            });
+          }
+        });
+        setMembers(newArr);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [todo]);
+  }, [todo, item]);
 
-  console.log(members);
-  const onWhatsapp = () => {
-    if (
-      members.filter((elem) => elem.name === userName)[0].data.mobile === ""
-    ) {
+  const onWhatsapp = (e) => {
+    if (members.filter((elem) => elem.name === userName)[0].mobile === "") {
       let phoneNumber = prompt(
         "Please enter your number to be able to use Whatsapp!"
       );
@@ -115,18 +125,17 @@ function ProjectCards(props) {
       });
       const updateMobile = [];
       members.forEach((elem) => {
-        if (elem.name === userName) elem.data.mobile = phoneNumber;
+        if (elem.name === userName) elem.mobile = phoneNumber;
         updateMobile.push(elem);
       });
       setMembers(updateMobile);
     }
-    const database = getDatabase();
-    const mobile_number = ref(database, "/project-members/");
-    onValue(mobile_number, (snapshot) => {
-      const data = snapshot.val();
-      console.log(data);
-      console.log(data[0].mobile_number); //dh rkm el mobile
-      window.open(`https://wa.me/2${data[0].mobile_number}`, "_blank");
+    members.forEach((elem) => {
+      if (elem.name === e.target.firstChild.data) {
+        if (elem.mobile === "")
+          alert(elem.name + "'s mobile number isn't available!");
+        else window.open(`https://wa.me/2${elem.mobile}`, "_blank");
+      }
     });
   };
 

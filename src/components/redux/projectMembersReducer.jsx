@@ -34,7 +34,6 @@ const intialState = {
 /* -------------------------------------------------------------------------- */
 
 export const addMemberReducer = (state = intialState, action) => {
-  console.log(state, action.type, "ddddddddd");
   switch (action.type) {
     case ADD_MEMBER:
       return {

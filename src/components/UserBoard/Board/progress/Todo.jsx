@@ -63,7 +63,7 @@ export default function Todo() {
               });
               for (var i = 0; i < arr.length; i++) {
                 if (arr[i].data.email === email) {
-                  invitedProjectsID.push(arr[i].name);
+                  invitedProjectsID.push(arr[i].data.projectID);
                 }
               }
               get(child(ref(getDatabase()), `users/`))
