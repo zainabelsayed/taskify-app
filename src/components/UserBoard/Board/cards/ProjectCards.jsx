@@ -22,7 +22,6 @@ function ProjectCards(props) {
   const { textColor, percent, progressColor, item, todo, setTodo } = props;
   const dispatch = useDispatch();
   const [members, setMembers] = useState([]);
-  const userName = sessionStorage.getItem("user");
 
   var category = useParams().category;
   if (category === undefined) category = "Work";
@@ -64,6 +63,7 @@ function ProjectCards(props) {
         if (snapshot !== undefined) {
           snapshot.val().forEach((invitedProject, index) => {
             if (invitedProject.projectID === item.data.projectID) {
+              //hnaaaaaaaaaaaaaaaaaa
               update(ref(getDatabase(), `project-members/${index}`), {
                 email: null,
                 projectID: null,
@@ -92,9 +92,8 @@ function ProjectCards(props) {
         arr.forEach((elem) => {
           if (elem.data.projects !== undefined) {
             elem.data.projects.forEach((project) => {
-              if (project.projectID === item.data.projectID) {
+              if (project.projectID === item.data.projectID)
                 newArr.push({ name: elem.name, mobile: elem.data.mobile });
-              }
             });
           }
         });
@@ -106,6 +105,7 @@ function ProjectCards(props) {
   }, [todo, item]);
 
   const onWhatsapp = (e) => {
+    const userName = sessionStorage.getItem("user");
     if (members.filter((elem) => elem.name === userName)[0].mobile === "") {
       let phoneNumber = prompt(
         "Please enter your number to be able to use Whatsapp!"
@@ -161,11 +161,20 @@ function ProjectCards(props) {
               <FontAwesomeIcon icon={["fab", "whatsapp"]} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {members.map((elem) => (
-                <Dropdown.Item onClick={onWhatsapp} key={elem.name}>
-                  {elem.name}
+              {members.length > 1 ? (
+                members.map(
+                  (elem) =>
+                    elem.name !== sessionStorage.getItem("user") && (
+                      <Dropdown.Item onClick={onWhatsapp} key={elem.name}>
+                        {elem.name}
+                      </Dropdown.Item>
+                    )
+                )
+              ) : (
+                <Dropdown.Item onClick={onWhatsapp} className="pe-none">
+                  No members are available
                 </Dropdown.Item>
-              ))}
+              )}
             </Dropdown.Menu>
           </Dropdown>
         ) : (

@@ -180,7 +180,10 @@ export default function Todo() {
               )
           )}
 
-          <div className="bg-white d-flex align-items-center justify-content-center py-4 shadow border-rad-1-3rem col-md-4 my-auto mx-0">
+          <div
+            className="bg-white d-flex align-items-center justify-content-center py-4 shadow border-rad-1-3rem col-md-4 my-auto mx-0"
+            style={{ width: "32%" }}
+          >
             <button
               className="fw-bold todo-plus rounded-circle"
               data-bs-toggle="modal"

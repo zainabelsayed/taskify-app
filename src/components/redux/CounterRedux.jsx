@@ -1,5 +1,3 @@
-import { getDatabase, ref, get, child } from "firebase/database";
-
 //Actions
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
