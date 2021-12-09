@@ -61,7 +61,7 @@ export default function InvitationForm() {
     console.log(member);
   }
   return (
-    <div className="col-md-3 me-1">
+        <>
       <form
         className="input-group bg-transparent align-items-center"
         onSubmit={(e) => sendIvite(e)}
@@ -110,6 +110,6 @@ export default function InvitationForm() {
         </button>
       </form>
       <p ref={mailError} className="text-danger fs-min"></p>
-    </div>
+      </>
   );
 }

@@ -7,7 +7,7 @@ useEffect(()=>{
   console.log(overdue)
 },[overdue])
     return (
-        <div className="text-start text-white userDashboard mt-2 p-3">
+        <div className="text-start text-white userDashboard mt-2 p-3 d-none d-lg-block">
         <h6 className="pb-2">Overdue Tasks</h6>
         <div>
         {overdue?.length > 0 ? tasks.map((item, index) => {

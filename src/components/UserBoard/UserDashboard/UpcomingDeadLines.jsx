@@ -8,7 +8,7 @@ export default function UpcomingDeadLines(props) {
     console.log(upcoming)
   },[upcoming,tasks])
   return (
-      <div className="text-start text-white userDashboard mt-2 p-3">
+      <div className="text-start text-white userDashboard mt-2 p-3 d-none d-lg-block">
         <h6 className="pb-2">Upcoming Deadlines</h6>
         <div>
         {upcoming?.length > 0 ? tasks.map((item, index) => {

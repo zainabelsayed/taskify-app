@@ -85,9 +85,9 @@ function Progress() {
   
   return (
     <>
-      <div className="py-2 d-flex justify-content-between align-items-start">
+      <div className="py-2 d-flex progress-responsive justify-content-between align-items-start">
         {lists?.length>0?(
-        <div className="board-width me-3 bg-grey py-3 px-4 border-rad-1-3rem">
+        <div className="board-width tasks-board me-3 bg-grey py-3 px-4 border-rad-1-3rem tasks-board">
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <div className="row flex-row flex-nowrap board bg-transparent">
               {lists.map((list, index) => (
@@ -116,7 +116,6 @@ function Progress() {
           <UserDashboard
             lists={lists}
             tasks={tasks}
-            setTasks={setTasks}
           />
         </div>
       </div>
