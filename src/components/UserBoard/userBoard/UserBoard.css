@@ -9,3 +9,16 @@
 .catergory-and-dashboard-width {
     width: 18%;
 }
+@media only screen and (max-width:1024px) {
+    .catergory-and-dashboard-width{
+        width: 22% !important;
+    }
+    .board-width {
+        width: 75%;
+    }
+}
+@media only screen and (max-width:768px) {
+    .catergory-and-dashboard-width{
+        width: 100% !important;
+    }
+}

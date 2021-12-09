@@ -1,10 +1,19 @@
 .userDashboard{
-    width: 15rem;
+    width: 100%;
     background-color: #595de5;
     border-radius: 1.5rem;
 }
 .fs-min{
     font-size: 0.8rem;
+}
+.text-Doing{
+  color: #FCD129 !important;
+}
+.text-Done{
+ color: #F476A3 !important;
+}
+.text-Done{
+  color: #F476A3 !important;
 }
 .CircularProgressbar-path {
     margin: 0 auto;
@@ -27,4 +36,49 @@
       color:#00eeff;
       font-size: 0.75rem;
   }
-  
+  .todo .CircularProgressbar-path{
+    stroke:#00eeff !important;
+  }
+  .todo .CircularProgressbar-trail{
+    margin: 0 auto;
+    width: 70% !important;
+    height: 70% !important;
+  }
+  .doing .CircularProgressbar-trail{
+    margin: 0 auto;
+    stroke: #f8ebb8 !important;
+    width: 70% !important;
+    height: 70% !important;
+  }
+  .doing .CircularProgressbar-path{
+    stroke:#FCD129 !important;
+  }
+  .done .CircularProgressbar-trail{
+    margin: 0 auto;
+    stroke: #f8cada !important;
+    width: 70% !important;
+    height: 70% !important;
+  }
+  .done .CircularProgressbar-path{
+    stroke:#F476A3 !important;
+  }
+  .circular-todos{
+    display: none;
+  }
+ @media only screen and (max-width: 768px) {
+   :root{
+     font-size: 14px;
+   }
+   .circular-todos{
+     display: flex !important;
+   }
+ }
+ @media only screen and (max-width: 280px) {
+  :root{
+    font-size: 12px;
+  }
+  .doing .CircularProgressbar-trail, .todo .CircularProgressbar-trail, .done .CircularProgressbar-trail{
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

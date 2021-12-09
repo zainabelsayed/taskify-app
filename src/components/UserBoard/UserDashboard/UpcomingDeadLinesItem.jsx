@@ -7,15 +7,13 @@ export default function UpcomingDeadLines(props) {
     <>
       <div className="m-0">
         <div className={`d-flex justify-content-between mb-2 ${textColor}`}>
-          <p className="p-0 m-0 fs-min" style={{ color: "cyan" }}>
-            {task}
-          </p>
-          <p className="p-0 m-0 fs-min" style={{ color: "cyan" }}>
+          <p className="p-0 m-0 fs-min">{task}</p>
+          <p className="p-0 m-0 fs-min">
             {upcoming} {upcoming > 1 ? "days" : "day"} left
           </p>
         </div>
-        {percent ? (
-          <div className="row align-items-center">
+          {percent ? (
+            <div className="row align-items-center">
             <div className="col-9 m-0">
               <ProgressBar
                 percent={percent}
@@ -24,10 +22,10 @@ export default function UpcomingDeadLines(props) {
               />
             </div>
             <div className="col-3">
-              <span className={`${textColor}`}>{percent}%</span>
-            </div>
+            <span className={`${textColor}`}>{percent}%</span>
           </div>
-        ) : null}
+          </div>
+          ) : null}
       </div>
     </>
   );

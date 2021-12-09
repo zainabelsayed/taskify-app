@@ -15,7 +15,7 @@ export default function UserProjectDashboard() {
             <img className="rounded-circle w-100" src={userImg} alt="" />
           </figure>
           <div className="text-start w-50 ms-3">
-            <h6 className="mb-0 fw-bold fs-5">
+            <h6 className="mb-0 fw-bold fs-6 w-100">
               {sessionStorage.getItem("user")}
             </h6>
             {/* <p className="text-secondary fs-min">UI/UX Designer</p> */}

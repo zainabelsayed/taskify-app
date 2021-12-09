@@ -8,7 +8,7 @@ export default function AssignMembers(props) {
   /* -------------------------------------------------------------------------- */
   /*                           getting project members                          */
   /* -------------------------------------------------------------------------- */
-  const projectMembers = useSelector((state) => state.projectMembers);
+  const projectMembers = useSelector((state) => state.addMemberReducer.projectMembers);
   console.log(projectMembers);
   useEffect(() => {
     if (item.taskMembers && item.taskMembers.length > 0) {

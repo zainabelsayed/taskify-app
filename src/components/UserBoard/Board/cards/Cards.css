@@ -8,7 +8,7 @@
     background-color: #00EEFF !important;
 }
 .text-Todo{
-    color: #00EEFF;
+    color: #00EEFF !important;
 }
 .progress-todo{
     background-color: #00EEFF;
@@ -31,13 +31,13 @@
     background-color: #FCD129;
 }
 .text-Doing{
-    color: #FCD129;
+    color: #FCD129 !important;
 }
 .progressDone{
     background-color: #F476A3;
 }
 .text-Done{
-    color: #F476A3;
+    color: #F476A3 !important;
 }
 .close-btn:hover{
     background-color: transparent !important;

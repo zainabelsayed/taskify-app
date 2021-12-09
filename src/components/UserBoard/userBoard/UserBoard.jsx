@@ -6,7 +6,7 @@ import "./UserBoard.css";
 export default function UserBoard() {
   return (
     <>
-      <div className="px-5">
+      <div className="px-lg-4">
         <BoardHeader />
         <div>
           <Board />

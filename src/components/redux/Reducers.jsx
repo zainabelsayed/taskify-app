@@ -2,9 +2,7 @@ import { counterReducer } from "../redux/CounterRedux";
 import { addMemberReducer } from "./projectMembersReducer";
 import { combineReducers } from "redux";
 
-const reducers = combineReducers({
-  addMemberReducer,
+export default combineReducers({
   counterReducer,
-});
-
-export default reducers;
+  addMemberReducer
+})

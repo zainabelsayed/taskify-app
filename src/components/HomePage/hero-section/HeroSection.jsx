@@ -15,15 +15,15 @@ export default function HeroSection() {
             Try our Virtual Workspace! <pre></pre>
               Don't worry it's <span className="color-primary fs-1">FREE!</span>
             </h3>
-            <p className="pt-3">
+            <p className="pt-3 text-white">
               <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
               Track your projects in real time with live data
             </p>
-            <p>
+            <p className="text-white">
               <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
               Meet your team members with your favorite video app.
             </p>
-            <p>
+            <p className="text-white">
               <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
               Monitor tasks and teams with easy to read graphs.
             </p>

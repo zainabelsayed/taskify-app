@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect} from "react";
 import { database } from "../../../firebase-config";
 import { ref, set, get, child } from "firebase/database";
 import ReactTooltip from "react-tooltip";
 import { useDispatch } from "react-redux";
-import {
-  removeMemberAction,
-  addMemberAction,
-} from "../../redux/projectMembersReducer";
+import { removeMemberAction, addMemberAction } from "../../redux/projectMembersReducer";
 
 export default function ProjectMembers(props) {
-  const { setMember, member, projectMembers } = props;
+  const {setMember, member, projectMembers} = props  
   const dispatch = useDispatch();
-  console.log(member, projectMembers);
+  console.log(member,projectMembers)
   /* -------------------------------------------------------------------------- */
   /*                 getting project members data from firebase                 */
   /* -------------------------------------------------------------------------- */
@@ -29,22 +26,16 @@ export default function ProjectMembers(props) {
       .catch((error) => {
         console.error(error);
       });
-    member.forEach((member) => {
+  }, [projectMembers]);
+
+  useEffect(() => {
+    member.map((member) => {
       if (!projectMembers.includes(member.email)) {
         dispatch(addMemberAction(member.email));
       }
     });
     console.log(member, projectMembers);
-  }, []);
-
-  // useEffect(() => {
-  //   member.map((member) => {
-  //     if (!projectMembers.includes(member.email)) {
-  //       dispatch(addMemberAction(member.email));
-  //     }
-  //   });
-  //   console.log(member, projectMembers);
-  // }, [member, projectMembers]);
+  }, [member, projectMembers]);
 
   console.log(member, projectMembers);
   /* -------------------------------------------------------------------------- */
@@ -64,6 +55,7 @@ export default function ProjectMembers(props) {
     writeMembersData();
     console.log(member, projectMembers);
   };
+
 
   return (
     <div className="d-flex">
