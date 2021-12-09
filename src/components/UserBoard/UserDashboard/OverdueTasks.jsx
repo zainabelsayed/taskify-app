@@ -15,7 +15,7 @@ useEffect(()=>{
           return(
           <OverdueItem key={item.id}
             task={item.taskName}
-            textColor={`text-${item.list}-t text-Todo`}
+            textColor={`text-${item.list} text-Todo`}
             overdue={item.overdue}
           />)
         }}):(
