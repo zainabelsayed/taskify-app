@@ -78,7 +78,6 @@ function ProjectCards(props) {
   };
 
   useEffect(() => {
-    const userName = sessionStorage.getItem("user");
     const dbRef = ref(getDatabase());
     get(child(dbRef, "users/"))
       .then((snapshot) => {
@@ -93,10 +92,8 @@ function ProjectCards(props) {
         arr.forEach((elem) => {
           if (elem.data.projects !== undefined) {
             elem.data.projects.forEach((project) => {
-              if (project.projectID === item.data.projectID) {
-                if (elem.name !== userName)
-                  newArr.push({ name: elem.name, mobile: elem.data.mobile });
-              }
+              if (project.projectID === item.data.projectID)
+                newArr.push({ name: elem.name, mobile: elem.data.mobile });
             });
           }
         });
@@ -164,14 +161,17 @@ function ProjectCards(props) {
               <FontAwesomeIcon icon={["fab", "whatsapp"]} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {members.length > 0 ? (
-                members.map((elem) => (
-                  <Dropdown.Item onClick={onWhatsapp} key={elem.name}>
-                    {elem.name}
-                  </Dropdown.Item>
-                ))
+              {members.length > 1 ? (
+                members.map(
+                  (elem) =>
+                    elem.name !== sessionStorage.getItem("user") && (
+                      <Dropdown.Item onClick={onWhatsapp} key={elem.name}>
+                        {elem.name}
+                      </Dropdown.Item>
+                    )
+                )
               ) : (
-                <Dropdown.Item className="pe-none">
+                <Dropdown.Item onClick={onWhatsapp} className="pe-none">
                   No members are available
                 </Dropdown.Item>
               )}
