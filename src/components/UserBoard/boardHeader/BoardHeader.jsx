@@ -33,8 +33,9 @@ export default function BoardHeader(props) {
       const [project] = users[user].projects.filter(
         (project) => project.projectID === projectID
       );
+      if(project){
       setProjectName( project.projectName)
-      console.log(projectName)
+      console.log(projectName)}
     }
   },[users,user])
   
@@ -57,7 +58,7 @@ export default function BoardHeader(props) {
         <h5>{projectName}</h5>
       </div>
       <div className="project-name">
-        <InvitationForm projectID={projectID} />
+        <InvitationForm projectID={projectID} projectName={projectName} />
       </div>
       <div className="profile-width d-none d-lg-block">
         <UserProjectDashboard />

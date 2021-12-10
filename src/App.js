@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/login/LoginForm";
 import RegisterForm from "./components/register/RegisterForm";
 import Home from "./components/HomePage/home/Home";
+import Learn from "../src/components/HomePage/Learn/Learn";
 import UserProjectBoard from "./components/UserBoard/userBoard/UserProjectBoard";
 import UserBoard from "./components/UserBoard/userBoard/UserBoard";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
@@ -35,6 +36,7 @@ function App() {
       <Switch>
         <Route component={Home} path="/" exact />
         <Route component={Home} path="/home" />
+        <Route component={Learn} path="/learn-more" />
         <GuardProvider guards={[requireLogin]}>
           <GuardedRoute
             component={RegisterForm}
@@ -59,7 +61,7 @@ function App() {
           />
           <GuardedRoute
             component={UserBoard}
-            path="/:category/:projectID"
+            path="/:category/:projectID/tasks"
             meta={{ auth: true }}
           />
         </GuardProvider>

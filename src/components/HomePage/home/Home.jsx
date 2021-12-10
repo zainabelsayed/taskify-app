@@ -7,6 +7,7 @@ import Features from '../features/Features'
 import OneView from '../one-view/OneView'
 import Responsive from "../responsive/Responsive"
 import './Home.css'
+
 export default function Home() {
   return (
     <div>

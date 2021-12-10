@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { database } from "../../../firebase-config";
+import { ref, get, child, set } from "firebase/database";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "./UserDashboard.css";
@@ -8,10 +10,12 @@ import UpcomingDeadLines from "./UpcomingDeadLines";
 import TodosCircularBar from "./TodosCircularBar";
 
 export default function UserDashboard(props) {
-  const { lists, tasks } = props;
+  const { lists, tasks, projectID } = props;
+  const user = sessionStorage.getItem("user");
   const [doneCount, setDoneCount] = useState(0);
   const [percentDone, setPercentDone] = useState(0);
   const [doneId, setDoneId] = useState(null);
+  const [users, setUsers ] = useState([])
   /* -------------------------------------------------------------------------- */
   /*                    overdue tasks and upcoming deadlines                    */
   /* -------------------------------------------------------------------------- */
@@ -92,7 +96,35 @@ export default function UserDashboard(props) {
       setPercentDone((doneCount / tasks.length) * 100);
     }
   };
-
+  useEffect(() => {
+    const dbRef = ref(database);
+    get(child(dbRef, "users"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setUsers(snapshot.val());
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      
+  }, []);
+  function writeUpdatedUsersData(users) {
+    set(ref(database, "/users"), {
+      ...users,
+    });
+  }
+  useEffect(()=>{
+    if (user && users[user] && percentDone) {
+      const [project] = users[user].projects.filter(
+        (project) => project.projectID === projectID
+      );
+      project.percent = percentDone
+      writeUpdatedUsersData(users)
+    }
+  },[users,user,percentDone])
   useEffect(() => {
     updateDiff();
     checkPercentage();

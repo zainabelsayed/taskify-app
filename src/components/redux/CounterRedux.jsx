@@ -1,3 +1,4 @@
+import { getDatabase, ref, get, child } from "firebase/database";
 //Actions
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
@@ -25,6 +26,30 @@ const initialState = {
   friendsCounter: 0,
 };
 
+const userName = sessionStorage.getItem("user");
+const dbRef = ref(getDatabase());
+let temp = [0, 0, 0, 0, 0];
+get(child(dbRef, `users/${userName}/projects/`)).then((snapshot) => {
+  if (snapshot.exists()) {
+    const arr = [];
+    Object.keys(snapshot.val()).forEach((key) =>
+      arr.push({ name: key, data: snapshot.val()[key] })
+    );
+
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].data.category === "Work") temp[0] += 1;
+      else if (arr[i].data.category === "Family") temp[1] += 1;
+      else if (arr[i].data.category === "Personal") temp[2] += 1;
+      else if (arr[i].data.category === "Business") temp[3] += 1;
+      else temp[4] += 1;
+    }
+    initialState.familyCounter = temp[1];
+    initialState.workCounter = temp[0];
+    initialState.personalCounter = temp[2];
+    initialState.businessCounter = temp[3];
+    initialState.friendsCounter = temp[4];
+  }
+});
 
 //Reducer
 export const counterReducer = (state = initialState, action) => {

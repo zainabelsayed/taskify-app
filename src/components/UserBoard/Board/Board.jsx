@@ -1,10 +1,11 @@
 import "./Board.css";
 import Progress from "./progress/Progress";
-function Board() {
+function Board(props) {
+  const { projectID } = props
   return (
     <>
       <div className="container-fluid">
-        <Progress />
+        <Progress projectID={projectID} />
       </div>
     </>
   );

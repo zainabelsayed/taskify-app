@@ -44,9 +44,7 @@
 .icon-m{
     margin-bottom: -5rem;
 }
-button:hover{
-    background-color: #B24A64 !important;
-}
+
 .trapezoid::before {
     content: "";
     display: block;

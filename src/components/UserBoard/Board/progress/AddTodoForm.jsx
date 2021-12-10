@@ -7,7 +7,7 @@ import { database } from "../../../../firebase-config";
 import { ref,set } from "firebase/database";
 
 export default function AddTodoForm(props) {
-  const { listId, tasks, setTasks, mode, item } = props;
+  const { listId, tasks, setTasks, mode, item,projectID, allTasks, setAllTasks } = props;
   const close = useRef();
   /* -------------------------------------------------------------------------- */
   /*                           write data to firebase                           */
@@ -17,7 +17,7 @@ export default function AddTodoForm(props) {
   },[tasks])
   function writeTasksData() {
     set(ref(database, "/tasks"), {
-      ...tasks
+      ...allTasks
     });
   }
   let initialValues = {
@@ -50,8 +50,9 @@ export default function AddTodoForm(props) {
     setTasks([...newTasks])
     }
     else{
-    const newTodo = { listId, id: uuidv4(), ...value,taskMembers:[] };
+    const newTodo = { listId, id: uuidv4(), ...value,taskMembers:[],projectID };
     setTasks([...tasks, newTodo]);
+    setAllTasks([...allTasks,newTodo])
   }
     close.current.click();
     resetForm();

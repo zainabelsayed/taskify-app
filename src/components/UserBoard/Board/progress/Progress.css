@@ -57,10 +57,13 @@
 .list-width {
   width: 13.8rem;
 }
+@media screen and (min-width: 800px) {
+  .board {
+    height: 80vh !important;
+  }
+}
 .board {
-  height: 80vh !important;
   overflow: auto;
-
 }
 .board::-webkit-scrollbar{
     width: 10px;

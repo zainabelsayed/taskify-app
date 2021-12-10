@@ -27,6 +27,9 @@ export default function Footer() {
             <FontAwesomeIcon className="brand"  icon={faTwitter} />
             </div>
             </div>
+            <div className="pb-3">
+            <Link className="btn rounded-pill bg-pink text-white text-decoration-none" to="/learn-more">Learn More</Link>
+            </div>
             <p className="text-light text-start">©2021 All rights reserved</p>
           </div>
           <div className="col-md-4 text-start p-0 pe-md-5">

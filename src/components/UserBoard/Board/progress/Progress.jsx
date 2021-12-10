@@ -8,9 +8,13 @@ import AddList from "./AddList";
 import List from "./List";
 import UserDashboard from "../../UserDashboard/UserDashboard";
 
-function Progress() {
+function Progress(props) {
+  const { projectID } = props;
   const [tasks, setTasks] = useState([]);
   const [lists, setLists] = useState([]);
+  const [allLists, setAllLists] = useState([]);
+  const [allTasks, setAllTasks ] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   /* -------------------------------------------------------------------------- */
   /*                getting data from firebase realtime database                */
   /* -------------------------------------------------------------------------- */
@@ -19,9 +23,15 @@ function Progress() {
     get(child(dbRef, "lists"))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          setLists(snapshot.val());
+          setAllLists(snapshot.val());
+      const newLists = snapshot.val().filter((list) => list.projectID === projectID);
+          setLists([...newLists])
+          setIsLoading(true)
+          console.log(isLoading,allLists,lists)
         } else {
           console.log("No data available");
+          setIsLoading(true)
+          console.log(isLoading,allLists,lists)
         }
       })
       .catch((error) => {
@@ -30,7 +40,9 @@ function Progress() {
     get(child(dbRef, "tasks"))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          setTasks(snapshot.val());
+          setAllTasks(snapshot.val());
+          const newTasks = snapshot.val().filter(task=> task.projectID === projectID)
+          setTasks([...newTasks])
         } else {
           console.log("No data available");
         }
@@ -38,9 +50,8 @@ function Progress() {
       .catch((error) => {
         console.error(error);
       });
-
   }, []);
-
+  console.log(tasks, allTasks);
   /* -------------------------------------------------------------------------- */
   /*                          handle on drag end event                          */
   /* -------------------------------------------------------------------------- */
@@ -80,16 +91,29 @@ function Progress() {
         return task;
       });
       setTasks([...tasksReorder]);
+      const allTasksReorder = allTasks.map((task) => {
+        if (task.id === result.draggableId) {
+          task.listId = result.destination.droppableId;
+        }
+        for (let list of lists) {
+          if (list.listId === task.listId) {
+            task.list = list.title;
+          }
+        }
+        return task;
+      });
+      setAllTasks([...allTasksReorder])
+
     }
   };
-  
+
   return (
     <>
       <div className="py-2 d-flex progress-responsive justify-content-between align-items-start">
-        {lists?.length>0?(
+        {isLoading?(
         <div className="board-width tasks-board me-3 bg-grey py-3 px-4 border-rad-1-3rem">
           <DragDropContext onDragEnd={handleOnDragEnd}>
-            <div className="row flex-row flex-nowrap board bg-transparent">
+            <div className="row flex-md-wrap flex-lg-nowrap board bg-transparent">
               {lists.map((list, index) => (
                 <List
                   key={list.listId}
@@ -100,16 +124,29 @@ function Progress() {
                   setLists={setLists}
                   tasks={tasks}
                   setTasks={setTasks}
+                  projectID={projectID}
+                  allLists={allLists}
+                  setAllLists={setAllLists}
+                  allTasks={allTasks}
+                  setAllTasks={setAllTasks}
                 />
               ))}
-              <AddList lists={lists} setLists={setLists} />
+              <AddList
+                lists={lists}
+                setLists={setLists}
+                projectID={projectID}
+                allLists={allLists}
+                setAllLists={setAllLists}
+              />
             </div>
           </DragDropContext>
-        </div>):(
-          <div style={{padding:"12rem 30rem"}}>
-          <HashLoader
-          color={"#595de5"} loading={true} css={""} size={50} speedMultiplier={1} />
-          </div>
+        </div>
+        )
+        :(
+        <div style={{padding:"12rem 30rem"}}>
+        <HashLoader
+        color={"#595de5"} loading={true} css={""} size={50} speedMultiplier={1} />
+        </div>
         )
         }
         <div className="catergory-and-dashboard-width">
@@ -117,6 +154,7 @@ function Progress() {
             lists={lists}
             tasks={tasks}
             setTasks={setTasks}
+            projectID={projectID}
           />
         </div>
       </div>

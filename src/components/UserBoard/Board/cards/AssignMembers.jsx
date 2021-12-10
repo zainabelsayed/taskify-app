@@ -4,12 +4,11 @@ import ReactTooltip from "react-tooltip";
 import emailjs from "emailjs-com";
 
 export default function AssignMembers(props) {
-  const { item, textColor, tasks, setTasks } = props;
+  const { item, textColor, tasks, setTasks, allTasks,setAllTasks } = props;
   /* -------------------------------------------------------------------------- */
   /*                           getting project members                          */
   /* -------------------------------------------------------------------------- */
   const projectMembers = useSelector((state) => state.addMemberReducer.projectMembers);
-  console.log(projectMembers)
   useEffect(() => {
     if (item.taskMembers && item.taskMembers.length > 0) {
       item.taskMembers.forEach((member) => {
@@ -31,6 +30,14 @@ export default function AssignMembers(props) {
     }
     if (item.taskMembers && !item.taskMembers.includes(member)) {
       item.taskMembers = [...item.taskMembers, member];
+      allTasks.map(task=>{
+        if(task.id === item.id){
+          if (!task.taskMembers) {
+            task.taskMembers = [];
+          }
+          task.taskMembers = [...task.taskMembers, member];
+        }
+      })
       const newTasks = tasks;
       setTasks([...newTasks]);
       const templateParams = {
@@ -40,10 +47,10 @@ export default function AssignMembers(props) {
       };
       emailjs
         .send(
-          "service_szwzkxn",
-          "template_709z4cd",
+          "service_sqbsi1g",
+          "template_9w6l395",
           templateParams,
-          "user_oJmNhjefsLIXACgj0otov"
+          "user_aLQwy8t4UwqyBfWS1TMBv"
         )
         .then(
           function (response) {
@@ -61,6 +68,11 @@ export default function AssignMembers(props) {
 
   const removeMember = (member) => {
     item.taskMembers.splice(item.taskMembers.indexOf(member), 1);
+    allTasks.map(task=>{
+      if(task.id === item.id){
+        task.taskMembers.splice(task.taskMembers.indexOf(member), 1);
+      }
+    })
     const newTasks = tasks;
     setTasks([...newTasks]);
   };

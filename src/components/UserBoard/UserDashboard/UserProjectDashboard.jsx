@@ -11,18 +11,18 @@ export default function UserProjectDashboard() {
     <section>
       <div className="userProfile mb-2">
         <div className="d-flex align-items-center justify-content-between">
-          <figure className="w-25 mb-0">
-            <img className="rounded-circle w-100" src={userImg} alt="" />
-          </figure>
-          <div className="text-start w-50 ms-3">
-            <h6 className="mb-0 fw-bold fs-6 w-100">
+          <div className="icon px-1 fw-bold shadow-sm border-0">
+          {sessionStorage.getItem("user").charAt(0).toUpperCase()}
+          </div>
+          <div className="text-center w-75">
+            <h6 className="mb-0 fw-bold w-100 p-0">
               {sessionStorage.getItem("user")}
             </h6>
             {/* <p className="text-secondary fs-min">UI/UX Designer</p> */}
           </div>
-          <div className="dropdown w-25">
+          <div className="dropdown">
             <button
-              className="btn btn-secondary dropdown-toggle"
+              className="btn btn-secondary px-1 py-0 dropdown-toggle"
               type="button"
               id="dropdownMenuButton1"
               data-bs-toggle="dropdown"

@@ -9,7 +9,7 @@ import AssignMembers from "./AssignMembers";
 
 function Cards(props) {
   const card = useRef();
-  const { textColor, progressColor, item, tasks, setTasks } = props;
+  const { textColor, progressColor, item, tasks, setTasks, allTasks, setAllTasks } = props;
   const [statusFlag, setStatusFlag] = useState(false);
  
   useEffect(() => {
@@ -20,7 +20,9 @@ function Cards(props) {
   const deleteTodo = () => {
     card.current.style.display = " ";
     const newTodos = tasks.filter((task) => task.id !== item.id);
+    const updatedTasks = allTasks.filter((task) => task.id !== item.id);
     setTasks([...newTodos]);
+    setAllTasks([...updatedTasks])
   };
   /* -------------------------------------------------------------------------- */
   /*                   calculate checklist progress percentage                  */
@@ -123,6 +125,8 @@ function Cards(props) {
           tasks={tasks}
           setTasks={setTasks}
           textColor={textColor}
+          allTasks={allTasks}
+          setAllTasks={setAllTasks}
           />
         </div>
       </div>

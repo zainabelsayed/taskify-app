@@ -1,18 +1,17 @@
 import React, { useRef, useState } from "react";
 import emailjs from "emailjs-com";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { database } from "../../../firebase-config";
 import { ref, set} from "firebase/database";
-import { addMemberAction } from "../../redux/projectMembersReducer";
 import ProjectMembers from "./ProjectMembers";
 
 export default function InvitationForm(props) {
-  const {projectID} = props
-  const from_name = "Taskify members";
-  const project_name = "Graduation Project";
+  const {projectID, projectName } = props
+  const user = sessionStorage.getItem("user");
+  const from_name = user;
+  const project_name = projectName;
   const mailRef = useRef();
   const mailError = useRef();
-  const dispatch = useDispatch();
   const [invitedMail, setInvitedMail] = useState();
   const [member, setMember] = useState([]);
   const [allMembers , setAllMembers ] = useState([])
@@ -36,17 +35,16 @@ export default function InvitationForm(props) {
   const sendIvite = (e) => {
     e.preventDefault();
     if (!projectMembers.includes(invitedMail)) {
-      // dispatch(addMemberAction(invitedMail));
       console.log(projectMembers,member)
       setMember([...member, { email: invitedMail, projectID }]);
       setAllMembers([...allMembers,{ email: invitedMail, projectID }])
       writeProjectMembersData(invitedMail,projectID);
       emailjs
         .sendForm(
-          "service_szwzkxn",
-          "template_709z4cd",
+          "service_sqbsi1g",
+          "template_dumt1qp",
           e.target,
-          "user_oJmNhjefsLIXACgj0otov"
+          "user_aLQwy8t4UwqyBfWS1TMBv"
         )
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
@@ -107,7 +105,9 @@ export default function InvitationForm(props) {
           className="input-group-text rounded-pill m-head text-white"
           id="basic-addon2"
           onClick={() => {
-            mailRef.current.value = "";
+            setTimeout(()=>{
+              mailRef.current.value = "";
+            },3000)
           }}
         >
           Invite

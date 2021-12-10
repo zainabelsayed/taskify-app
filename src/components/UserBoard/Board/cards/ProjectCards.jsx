@@ -146,7 +146,7 @@ function ProjectCards(props) {
     >
       <div className="d-flex justify-content-between align-items-baseline">
         <Link
-          to={`/${category}/${item.data.projectID}`}
+          to={`/${category}/${item.data.projectID}/tasks`}
           className="text-decoration-none text-dark"
           style={{
             fontFamily:
@@ -197,7 +197,7 @@ function ProjectCards(props) {
           </div>
           <div className="col-3">
             <div className={`text-todo fs-6 fw-bold ${textColor}`}>
-              {percent}%
+              {percent.toFixed(0)}%
             </div>
           </div>
         </div>

@@ -5,16 +5,19 @@ import { v4 as uuidv4 } from "uuid";
 import { database } from "../../../../firebase-config";
 import { ref, set } from "firebase/database";
 
+
 export default function AddList(props) {
-  const { lists, setLists} = props;
+  const { lists, setLists, projectID,allLists, setAllLists} = props;
   const [addList, setAddList] = useState(false);
   const listTitle = useRef();
-  function writeListsData(title,listId) {
-    set(ref(database, "lists/"+(lists.length-1)), {
+  function writeListsData(title,listId,projectID) {
+    set(ref(database, "lists/"+allLists.length), {
       title:title,
-      listId:listId
+      listId:listId,
+      projectID:projectID,
     });
   }
+  
   const showInput = () => {
     setAddList(true);
   };
@@ -22,12 +25,14 @@ export default function AddList(props) {
     setAddList(false)
   }
   const addListTitle = () => {
-    const title = listTitle.current.value;
+    let title = listTitle.current.value
+    title = title.charAt(0).toUpperCase() + title.slice(1);
     const listId = uuidv4()
-    setLists([...lists, { title, listId }]);
-    writeListsData(title,listId)
+    setLists([...lists, { title, listId,projectID }]);
+    setAllLists([...allLists, { title, listId,projectID }]);
+    writeListsData(title,listId,projectID)
     setAddList(false);
-    console.log(lists);
+    console.log(lists,allLists);
   };
   return (
     <div className="col-md-3">

@@ -26,6 +26,12 @@ export default function ProjectMembers(props) {
     get(child(dbRef, "project-members"))
       .then((snapshot) => {
         if (snapshot.exists()) {
+          snapshot.val().map((member) => {
+            if (!projectMembers.includes(member.email) && member.projectID === projectID) {
+              dispatch(addMemberAction(member.email));
+            }else{
+              dispatch(removeMemberAction(member.email))
+            }})
           setAllMembers(snapshot.val());
           const newMember = snapshot.val().filter(
             (memberDb) => memberDb.projectID === projectID
@@ -41,30 +47,30 @@ export default function ProjectMembers(props) {
   }, []);
 
   useEffect(() => {
-    member.map((member) => {
+    allMembers.map((member) => {
       if (!projectMembers.includes(member.email) && member.projectID === projectID) {
         dispatch(addMemberAction(member.email));
-      }else{
-        dispatch(removeMemberAction(member.email))
       }
-    });
-    console.log(member, projectMembers, allMembers);
-  }, [allMembers,member]);
+     })
+  }, [allMembers,member,projectMembers]);
   /* -------------------------------------------------------------------------- */
   /*                            remove project member                           */
   /* -------------------------------------------------------------------------- */
-  function writeMembersData() {
+  function writeMembersData(members) {
     set(ref(database, "/project-members"), {
-      ...allMembers,
+      ...members,
     });
   }
   const removeMember = (memberMail) => {
     console.log(memberMail.email, memberMail);
     member.splice(member.indexOf(memberMail), 1);
+    const updatedMembers= allMembers.filter(item=> item.email !== memberMail.email )
     dispatch(removeMemberAction(memberMail.email));
+    setAllMembers([...updatedMembers])
     const newMembers = member;
     setMember([...newMembers]);
-    writeMembersData();
+    writeMembersData(updatedMembers);
+    console.log(projectMembers,allMembers)
   };
 
   return (
