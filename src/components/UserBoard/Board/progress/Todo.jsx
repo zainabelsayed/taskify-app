@@ -5,10 +5,14 @@ import ProjectCards from "../cards/ProjectCards";
 import AddTodoProjectForm from "./AddTodoProjectForm";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch } from "react-redux";
+import { incrementNum } from "../../../redux/CounterRedux";
+import "./Todo.css";
 
 export default function Todo() {
   const [todo, setTodo] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
 
   var category = useParams().category;
   if (category === undefined) category = "Work";
@@ -42,114 +46,141 @@ export default function Todo() {
     ]);
   };
 
-  get(child(ref(getDatabase()), `project-members/`))
-    .then((invitedMembers) => {
-      if (invitedMembers !== undefined) {
-        const arr = [];
-        const userName = sessionStorage.getItem("user");
-        Object.keys(invitedMembers.val()).forEach((key) =>
-          arr.push({
-            name: key,
-            data: invitedMembers.val()[key],
-          })
-        );
-        get(child(ref(getDatabase()), `users/${userName}/`))
-          .then((result) => {
-            if (result !== undefined) {
-              let email = "";
-              let invitedProjectsID = [];
-              Object.keys(result.val()).forEach((key) => {
-                if (key === "email") email = result.val()[key];
-              });
-              for (var i = 0; i < arr.length; i++) {
-                if (arr[i].data.email === email) {
-                  invitedProjectsID.push(arr[i].data.projectID);
-                }
-              }
-              get(child(ref(getDatabase()), `users/`))
-                .then((users) => {
-                  if (users !== undefined) {
-                    const invitedProjects = [];
-                    Object.keys(users.val()).forEach((key) => {
-                      if (users.val()[key].projects !== undefined) {
-                        for (let j = 0; j < invitedProjectsID.length; j++) {
-                          users.val()[key].projects.forEach((elem) => {
-                            if (elem.projectID === invitedProjectsID[j]) {
-                              invitedProjects.push(elem);
-                            }
-                          });
-                        }
-                      }
-                    });
-
-                    get(
-                      child(ref(getDatabase()), `users/${userName}/projects/`)
-                    )
-                      .then((currentProjects) => {
-                        let id = 0;
-                        if (currentProjects !== undefined) {
-                          if (currentProjects.val() === null) {
-                            invitedProjects.forEach((proj) => {
-                              addInvitedProject(id, proj);
-                              id++;
-                            });
-                          } else {
-                            id = currentProjects.val().length + 1;
-                            invitedProjects.forEach((proj) => {
-                              if (
-                                currentProjects
-                                  .val()
-                                  .filter(
-                                    (elem) => elem.projectID === proj.projectID
-                                  ).length === 0
-                              ) {
-                                addInvitedProject(id, proj);
-                                id++;
-                              }
-                            });
-                          }
-                        }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  }
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
   useEffect(() => {
-    const userName = sessionStorage.getItem("user");
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, `users/${userName}/projects/`))
-      .then((snapshot) => {
-        if (snapshot !== undefined) {
+    get(child(ref(getDatabase()), `project-members/`))
+      .then((invitedMembers) => {
+        if (invitedMembers.exists() || invitedMembers !== undefined) {
           const arr = [];
-          Object.keys(snapshot.val()).forEach((key) =>
+          const userName = sessionStorage.getItem("user");
+          Object.keys(invitedMembers.val()).forEach((key) =>
             arr.push({
               name: key,
-              data: snapshot.val()[key],
+              data: invitedMembers.val()[key],
             })
           );
-          setTodo(arr);
+          get(child(ref(getDatabase()), `users/${userName}/`))
+            .then((result) => {
+              if (result.exists() || result !== undefined) {
+                let email = "";
+                let invitedProjectsID = [];
+                Object.keys(result.val()).forEach((key) => {
+                  if (key === "email") email = result.val()[key];
+                });
+                for (var i = 0; i < arr.length; i++) {
+                  if (arr[i].data.email === email) {
+                    invitedProjectsID.push(arr[i].data.projectID);
+                  }
+                }
+                get(child(ref(getDatabase()), `users/`))
+                  .then((users) => {
+                    if (users.exists() || users !== undefined) {
+                      const invitedProjects = [];
+                      Object.keys(users.val()).forEach((key) => {
+                        if (users.val()[key].projects !== undefined) {
+                          // const projectsArr = Object.entries(
+                          //   users.val()[key].projects
+                          // );
+
+                          for (let j = 0; j < invitedProjectsID.length; j++) {
+                            if (
+                              users.val()[key].projects.length !== undefined
+                            ) {
+                              users.val()[key].projects.forEach((elem) => {
+                                if (elem.projectID === invitedProjectsID[j]) {
+                                  invitedProjects.push(elem);
+                                }
+                              });
+                            } else {
+                              Object.values(users.val()[key].projects).forEach(
+                                (elem) => {
+                                  if (elem.projectID === invitedProjectsID[j])
+                                    invitedProjects.push(elem);
+                                }
+                              );
+                            }
+                          }
+                        }
+                      });
+
+                      get(
+                        child(ref(getDatabase()), `users/${userName}/projects/`)
+                      )
+                        .then((currentProjects) => {
+                          let id = 0;
+                          if (currentProjects !== undefined) {
+                            if (currentProjects.val() === null) {
+                              invitedProjects.forEach((proj) => {
+                                dispatch(incrementNum(proj.category));
+                                addInvitedProject(id, proj);
+                                id++;
+                              });
+                            } else {
+                              id =
+                                parseInt(
+                                  Object.keys(currentProjects.val())[
+                                    Object.keys(currentProjects.val()).length -
+                                      1
+                                  ]
+                                ) + 1;
+                              invitedProjects.forEach((proj) => {
+                                if (
+                                  Object.values(currentProjects.val()).filter(
+                                    (elem) => elem.projectID === proj.projectID
+                                  ).length === 0
+                                ) {
+                                  dispatch(incrementNum(proj.category));
+                                  addInvitedProject(id, proj);
+                                  id++;
+                                }
+                              });
+                            }
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
-        setLoaded(true);
       })
       .catch((error) => {
         console.log(error);
-        setLoaded(true);
       });
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const userName = sessionStorage.getItem("user");
+      const dbRef = ref(getDatabase());
+      get(child(dbRef, `users/${userName}/projects/`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            if (snapshot !== undefined) {
+              const arr = [];
+              Object.keys(snapshot.val()).forEach((key) =>
+                arr.push({
+                  name: key,
+                  data: snapshot.val()[key],
+                })
+              );
+              setTodo(arr);
+            }
+          }
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoaded(true);
+        });
+    }, 1000);
   }, []);
 
   return (
@@ -174,7 +205,6 @@ export default function Todo() {
                     todo={todo}
                     progressColor="progress-todo"
                     textColor="text-todo"
-                    percent={item.data.percent}
                   />
                 </div>
               )

@@ -1,0 +1,15 @@
+@media only screen and (max-width: 768px) {
+    #todo {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: wrap !important;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    #todo {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: wrap !important;
+    }
+}

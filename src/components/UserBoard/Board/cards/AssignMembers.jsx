@@ -1,10 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import emailjs from "emailjs-com";
+import { database } from "../../../../firebase-config";
+import { ref, get, child } from "firebase/database";
 
 export default function AssignMembers(props) {
-  const { item, textColor, tasks, setTasks, allTasks,setAllTasks } = props;
+  const { item, textColor, tasks, setTasks, allTasks,setAllTasks,projectID } = props;
+  const [users, setUsers] = useState([]);
+  const [projectName, setProjectName] = useState()
+  const user = sessionStorage.getItem("user");
+ 
+  useEffect(() => {
+    const dbRef = ref(database);
+    get(child(dbRef, "users"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setUsers(snapshot.val());
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      
+  }, []);
+  useEffect(()=>{
+    if (user && users[user]) {
+      const [project] = users[user].projects.filter(
+        (project) => project.projectID === projectID
+      );
+      if(project){
+      setProjectName( project.projectName)
+      console.log(projectName)}
+    }
+  },[users,user])
   /* -------------------------------------------------------------------------- */
   /*                           getting project members                          */
   /* -------------------------------------------------------------------------- */
@@ -42,7 +73,8 @@ export default function AssignMembers(props) {
       setTasks([...newTasks]);
       const templateParams = {
         from_name: "Taskify members",
-        project_name: `Graduation Project assigned task ${item.taskName}`,
+        task_name: `${item.taskName}`,
+        project_name:projectName,
         invited_email: member,
       };
       emailjs

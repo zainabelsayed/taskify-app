@@ -11,14 +11,13 @@ export default function UserProjectDashboard() {
     <section>
       <div className="userProfile mb-2">
         <div className="d-flex align-items-center justify-content-between">
-          <div className="icon px-1 fw-bold shadow-sm border-0">
+          <div className="icon px-2 fw-bold shadow-sm border-0">
           {sessionStorage.getItem("user").charAt(0).toUpperCase()}
           </div>
           <div className="text-center w-75">
             <h6 className="mb-0 fw-bold w-100 p-0">
               {sessionStorage.getItem("user")}
             </h6>
-            {/* <p className="text-secondary fs-min">UI/UX Designer</p> */}
           </div>
           <div className="dropdown">
             <button

@@ -159,7 +159,7 @@ export default function AddTodoProjectForm(props) {
                     onChange={formik.handleChange}
                     required
                   />{" "}
-                  <p className="w-25 ms-3">Days</p>
+                  <p className="w-25 ms-3">Months</p>
                 </div>
               </div>
               <div className="mb-4">

@@ -21,12 +21,14 @@ export default function Category() {
       .then((snapshot) => {
         if (snapshot !== undefined) {
           const arr = [];
-          Object.keys(snapshot.val()).forEach((key) =>
-            arr.push({
-              name: key,
-              data: snapshot.val()[key],
-            })
-          );
+          if (snapshot.val() !== null) {
+            Object.keys(snapshot.val()).forEach((key) =>
+              arr.push({
+                name: key,
+                data: snapshot.val()[key],
+              })
+            );
+          }
           let temp = [0, 0, 0, 0, 0];
           for (let i = 0; i < arr.length; i++) {
             if (arr[i].data.category === "Work") temp[0] += 1;

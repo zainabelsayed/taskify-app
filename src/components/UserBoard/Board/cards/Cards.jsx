@@ -9,7 +9,7 @@ import AssignMembers from "./AssignMembers";
 
 function Cards(props) {
   const card = useRef();
-  const { textColor, progressColor, item, tasks, setTasks, allTasks, setAllTasks } = props;
+  const { textColor, progressColor, item, tasks, setTasks, allTasks, setAllTasks,projectID } = props;
   const [statusFlag, setStatusFlag] = useState(false);
  
   useEffect(() => {
@@ -127,6 +127,7 @@ function Cards(props) {
           textColor={textColor}
           allTasks={allTasks}
           setAllTasks={setAllTasks}
+          projectID={projectID}
           />
         </div>
       </div>
