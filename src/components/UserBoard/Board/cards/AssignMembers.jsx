@@ -65,8 +65,10 @@ export default function AssignMembers(props) {
         if(task.id === item.id){
           if (!task.taskMembers) {
             task.taskMembers = [];
+          }else {
+            if(!task.taskMembers.includes(member)){
+            task.taskMembers = [...task.taskMembers, member];}
           }
-          task.taskMembers = [...task.taskMembers, member];
         }
       })
       const newTasks = tasks;
