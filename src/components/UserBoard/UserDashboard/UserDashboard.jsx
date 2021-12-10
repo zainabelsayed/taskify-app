@@ -5,17 +5,18 @@ import "react-circular-progressbar/dist/styles.css";
 import "./UserDashboard.css";
 import OverdueTasks from "./OverdueTasks";
 import UpcomingDeadLines from "./UpcomingDeadLines";
+import TodosCircularBar from "./TodosCircularBar";
 
 export default function UserDashboard(props) {
-  const { lists, tasks, setTasks } = props;
+  const { lists, tasks } = props;
   const [doneCount, setDoneCount] = useState(0);
   const [percentDone, setPercentDone] = useState(0);
   const [doneId, setDoneId] = useState(null);
   /* -------------------------------------------------------------------------- */
   /*                    overdue tasks and upcoming deadlines                    */
   /* -------------------------------------------------------------------------- */
-  const [ upcoming, setUpcomming ] = useState([])
-  const [ overdue, setOverdue ] = useState([])
+  const [upcoming, setUpcomming] = useState([]);
+  const [overdue, setOverdue] = useState([]);
   const today = moment();
 
   const updateDiff = () => {
@@ -23,7 +24,7 @@ export default function UserDashboard(props) {
       const taskDeadline = moment(task.deadline);
       const diff = parseInt(today.diff(taskDeadline, "days"));
       const upcomingDate = parseInt(diff) * -1 + 1;
-      
+
       for (let list of lists) {
         if (list.listId === task.listId) {
           task.list = list.title;
@@ -34,54 +35,45 @@ export default function UserDashboard(props) {
       if (diff > 0 && diff <= 3) {
         // check if he deleted something
         if (task.list !== "Done") {
-            task.overdue = diff;
-            delete task.upcoming;
-        }else{
-          delete task.overdue
-          delete task.upcoming
+          task.overdue = diff;
+          delete task.upcoming;
+        } else {
+          delete task.overdue;
+          delete task.upcoming;
         }
       } else {
-       
         if (upcomingDate >= 0 && upcomingDate < 4) {
           if (task.list !== "Done") {
-              task.upcoming = upcomingDate;
-                delete task.overdue;
-            }else{
-              delete task.overdue
-              delete task.upcoming
-            }
-          } 
-          console.log(upcomingDate);
-        }
-
-        //to make sure it calculates after it's been added (if yesterday diff was 3 days then today it would be 4 days)
-        
-        if(task.overdue){
-          if(diff < 4){
-            task.overdue = diff;
-          }
-          else{
-            delete task.overdue;
-          }
-        }
-        else if(task.upcoming){
-          if(upcomingDate < 4 ){
             task.upcoming = upcomingDate;
-          }
-          else{
+            delete task.overdue;
+          } else {
+            delete task.overdue;
             delete task.upcoming;
           }
         }
-      
+      }
+
+      //to make sure it calculates after it's been added (if yesterday diff was 3 days then today it would be 4 days)
+
+      if (task.overdue) {
+        if (diff < 4) {
+          task.overdue = diff;
+        } else {
+          delete task.overdue;
+        }
+      } else if (task.upcoming) {
+        if (upcomingDate < 4) {
+          task.upcoming = upcomingDate;
+        } else {
+          delete task.upcoming;
+        }
+      }
     }
-    console.log(tasks);
-    const upcomingTasks = tasks.filter(task=> task.upcoming)
-    const overdueTasks = tasks.filter(task => task.overdue)
-    setUpcomming([...upcomingTasks])
-    setOverdue([...overdueTasks])
+    const upcomingTasks = tasks.filter((task) => task.upcoming);
+    const overdueTasks = tasks.filter((task) => task.overdue);
+    setUpcomming([...upcomingTasks]);
+    setOverdue([...overdueTasks]);
   };
-  
-  console.log(upcoming,overdue)
   /* -------------------------------------------------------------------------- */
   /*                        update performance percentage                       */
   /* -------------------------------------------------------------------------- */
@@ -105,10 +97,11 @@ export default function UserDashboard(props) {
     updateDiff();
     checkPercentage();
   }, [tasks, lists, percentDone, doneCount, doneId]);
-  
+
   return (
     <section>
-      <div className="userDashboard">
+      <TodosCircularBar tasks={tasks} />
+      <div className="userDashboard d-none d-lg-block">
         <div className="precentage-progress px-4 py-1 text-center">
           <CircularProgressbar
             className="d-flex justify-content-center py-3

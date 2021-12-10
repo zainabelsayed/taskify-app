@@ -1,16 +1,14 @@
 import React from "react";
 import ProgressBar from "./../Board/progress-bar/Progress-bar";
 
-export default function UpcomingDeadLines(props) {
+export default function UpcomingDeadLinesItem(props) {
   const { percent, progressColor, textColor, task, upcoming } = props;
   return (
     <>
       <div className="m-0">
         <div className={`d-flex justify-content-between mb-2 ${textColor}`}>
-          <p className="p-0 m-0 fs-min" style={{ color: "cyan" }}>
-            {task}
-          </p>
-          <p className="p-0 m-0 fs-min" style={{ color: "cyan" }}>
+          <p className="p-0 m-0 fs-min">{task}</p>
+          <p className="p-0 m-0 fs-min">
             {upcoming} {upcoming > 1 ? "days" : "day"} left
           </p>
         </div>

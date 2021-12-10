@@ -11,10 +11,8 @@ function Cards(props) {
   const card = useRef();
   const { textColor, progressColor, item, tasks, setTasks } = props;
   const [statusFlag, setStatusFlag] = useState(false);
- 
-  useEffect(() => {
-    console.log(tasks, statusFlag);
-  }, [statusFlag, tasks ]);
+
+  useEffect(() => {}, [statusFlag, tasks]);
   /* -------------------------------------------------------------------------- */
   /*                                deleting task                               */
   /* -------------------------------------------------------------------------- */
@@ -22,12 +20,10 @@ function Cards(props) {
     card.current.style.display = " ";
     const newTodos = tasks.filter((task) => task.id !== item.id);
     setTasks([...newTodos]);
-    console.log("clicked", newTodos, tasks);
   };
   /* -------------------------------------------------------------------------- */
   /*                   calculate checklist progress percentage                  */
   /* -------------------------------------------------------------------------- */
-  console.log(tasks)
   let percent = 0;
   let checklistPercent = [];
   if (item.checklist && item.checklist.length > 0) {
@@ -35,27 +31,22 @@ function Cards(props) {
     item.checklist.map((list) => {
       if (list.items) {
         const i = list.items.map((item) => item);
-        console.log(i, item.checklist.length);
         if (i) {
           let checklistItems = i.length;
-          let s = i.filter((item) => item.status === true)
+          let s = i.filter((item) => item.status === true);
           let status = s.length;
-          console.log(s,status,i)
-          const percentPerChecklist = ((status / checklistItems)*100)
+
+          const percentPerChecklist = (status / checklistItems) * 100;
           checklistPercent.push(percentPerChecklist);
-          console.log(checklistItems, status, percent, checklistPercent);
         }
       }
     });
-    let total =0
-    checklistPercent.map(
-      (percentItem) =>{
-        total += (percentItem)
-      }
-    );
-    percent = (total/checklistNum).toFixed(0)
+    let total = 0;
+    checklistPercent.map((percentItem) => {
+      total += percentItem;
+    });
+    percent = (total / checklistNum).toFixed(0);
     item.percent = percent;
-    console.log(total,checklistPercent)
   }
 
   return (
@@ -103,13 +94,13 @@ function Cards(props) {
             </div>
             {item.checklist.map((list, index) => (
               <Checklists
-              list={list}
-              index={index}
-              tasks={tasks}
-              setTasks={setTasks}
-              item={item}
-              statusFlag={statusFlag}
-              setStatusFlag={setStatusFlag}
+                list={list}
+                index={index}
+                tasks={tasks}
+                setTasks={setTasks}
+                item={item}
+                statusFlag={statusFlag}
+                setStatusFlag={setStatusFlag}
               />
             ))}
           </>
@@ -125,10 +116,10 @@ function Cards(props) {
             <span className="fw-bold fs-date">{item.deadline}</span>
           </div>
           <AssignMembers
-          item={item}
-          tasks={tasks}
-          setTasks={setTasks}
-          textColor={textColor}
+            item={item}
+            tasks={tasks}
+            setTasks={setTasks}
+            textColor={textColor}
           />
         </div>
       </div>

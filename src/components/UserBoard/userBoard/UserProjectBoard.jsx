@@ -5,7 +5,7 @@ import ProjectBoard from "../Board/ProjectBoard";
 import "./UserBoard.css";
 export default function UserBoard() {
   return (
-    <div className="px-5 py-2 d-flex justify-content-between align-items-start">
+    <div className="px-5 py-2 d-flex justify-content-between align-items-start myBoard">
       <div className="catergory-and-dashboard-width">
         <Category />
       </div>

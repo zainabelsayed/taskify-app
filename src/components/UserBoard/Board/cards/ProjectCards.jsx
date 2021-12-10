@@ -19,7 +19,7 @@ library.add(faWhatsapp);
 
 function ProjectCards(props) {
   const projectCard = useRef();
-  const { textColor, percent, progressColor, item, todo, setTodo } = props;
+  const { textColor, progressColor, item, todo, setTodo } = props;
   const dispatch = useDispatch();
   const [members, setMembers] = useState([]);
 
@@ -91,9 +91,13 @@ function ProjectCards(props) {
         const newArr = [];
         arr.forEach((elem) => {
           if (elem.data.projects !== undefined) {
-            elem.data.projects.forEach((project) => {
+            Object.values(elem.data.projects).forEach((project) => {
               if (project.projectID === item.data.projectID)
-                newArr.push({ name: elem.name, mobile: elem.data.mobile });
+                newArr.push({
+                  name: elem.name,
+                  mobile: elem.data.mobile,
+                  email: elem.data.email,
+                });
             });
           }
         });
@@ -141,7 +145,7 @@ function ProjectCards(props) {
 
   return (
     <div
-      className="bg-white shadow pt-3 pb-2 px-4 border-rad-1-3rem my-3 text-start"
+      className="bg-white shadow pt-3 pb-2 px-4 border-rad-1-3rem my-3 text-start projectCard"
       ref={projectCard}
     >
       <div className="d-flex justify-content-between align-items-baseline">
@@ -197,7 +201,7 @@ function ProjectCards(props) {
           </div>
           <div className="col-3">
             <div className={`text-todo fs-6 fw-bold ${textColor}`}>
-              {percent}%
+              {item.data.percent}%
             </div>
           </div>
         </div>
@@ -206,13 +210,27 @@ function ProjectCards(props) {
         </div>
         <div className="row justify-content-between align-items-baseline">
           <div
-            className={`col-3 text-center mx-auto p-2 rounded-pill d-flex align-items-center justify-content-center ${progressColor}`}
+            className={`col-3 text-center p-2 rounded-pill d-flex w-auto align-items-center justify-content-center ${progressColor}`}
           >
-            <span className="fw-bold fs-min">{item.data.duration}Days</span>
+            <span className="fw-bold fs-min">{item.data.duration}Months</span>
           </div>
-          <div className="col-8">
-            <div className="row g-0 justify-content-between align-items-baseline">
-              <figure className="col-3">
+          <div className="col-7">
+            <div className="row g-0 align-items-baseline">
+              <div className="d-flex justify-content-end">
+                {members.map((elem) => (
+                  <button
+                    type="button"
+                    className="border-0 mem-icon fw-bold fs-min shadow-sm"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    data-tip
+                    data-for={elem.email}
+                  >
+                    {elem.email.charAt(0)}
+                  </button>
+                ))}
+              </div>
+              {/* <figure className="col-3">
                 <img
                   src={person1}
                   alt="person1"
@@ -235,7 +253,7 @@ function ProjectCards(props) {
               </figure>
               <div className="col-3">
                 <span className="fs-min fw-bold">+3</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

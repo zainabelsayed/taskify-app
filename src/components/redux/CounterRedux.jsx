@@ -31,7 +31,7 @@ const userName = sessionStorage.getItem("user");
 const dbRef = ref(getDatabase());
 let temp = [0, 0, 0, 0, 0];
 get(child(dbRef, `users/${userName}/projects/`)).then((snapshot) => {
-  if (snapshot !== undefined) {
+  if (snapshot.exists()) {
     const arr = [];
     Object.keys(snapshot.val()).forEach((key) =>
       arr.push({

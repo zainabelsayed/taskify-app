@@ -1,106 +1,142 @@
 .Todo {
-  background-color: #00eeff;
+    background-color: #00eeff;
 }
+
 .Doing {
-  background-color: #fcd129;
+    background-color: #fcd129;
 }
+
 .Done {
-  background-color: #f476a3;
+    background-color: #f476a3;
 }
+
 .Todo-plus,
 .Doing-plus,
 .Done-plus,
 .Todo-plus:hover,
 .Doing-plus:hover,
 .Done-plus:hover {
-  width: 3rem;
-  height: 3rem;
-  background-color: white !important;
+    width: 3rem;
+    height: 3rem;
+    background-color: white !important;
 }
+
 .Todo-plus,
 .Todo-plus:hover {
-  color: #00eeff;
-  border: 3px #00eeff dashed;
+    color: #00eeff;
+    border: 3px #00eeff dashed;
 }
+
 .Doing-plus,
 .Doing-plus:hover {
-  color: #fcd129;
-  border: 3px #fcd129 dashed;
+    color: #fcd129;
+    border: 3px #fcd129 dashed;
 }
+
 .Done-plus,
 .Done-plus:hover {
-  color: #f476a3;
-  border: 3px #f476a3 dashed;
+    color: #f476a3;
+    border: 3px #f476a3 dashed;
 }
-.border-rad-1-3rem {
-  border-radius: 1.3rem !important;
-}
-.rounded-5 {
-  border-radius: 0.8rem;
-}
-.bg-voilet {
-  background-color: #595de5 !important;
-}
-.bg-voilet:hover {
-  background-color: #494dc0 !important;
-}
-.add-list {
-  color: #595de5;
-  border: 3px #595de5 dashed;
-  width: 2.6rem;
-  height: 2.6rem;
-  background-color: white !important;
-}
-.add-list:hover {
-  background-color: transparent !important;
-}
-.list-width {
-  width: 13.8rem;
-}
-.board {
-  height: 80vh !important;
-  overflow: auto;
 
+.border-rad-1-3rem {
+    border-radius: 1.3rem !important;
 }
-.board::-webkit-scrollbar{
+
+.rounded-5 {
+    border-radius: 0.8rem;
+}
+
+.bg-voilet {
+    background-color: #595de5 !important;
+}
+
+.bg-voilet:hover {
+    background-color: #494dc0 !important;
+}
+
+.add-list {
+    color: #595de5;
+    border: 3px #595de5 dashed;
+    width: 2.6rem;
+    height: 2.6rem;
+    background-color: white !important;
+}
+
+.add-list:hover {
+    background-color: transparent !important;
+}
+
+.list-width {
+    width: 13.8rem;
+}
+
+.board {
+    height: 80vh !important;
+    overflow: auto;
+}
+
+.board::-webkit-scrollbar {
     width: 10px;
 }
 
 .board::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: rgba(89, 93, 229, 0.7);
-  transition: 0.3s ease-in-out;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(89, 93, 229, 0.7);
+    transition: 0.3s ease-in-out;
 }
+
 .board::-webkit-scrollbar-track {
     background-color: white;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
-.board::-webkit-scrollbar-thumb:hover{
+
+.board::-webkit-scrollbar-thumb:hover {
     background-color: rgba(89, 93, 229, 1);
-} 
-.close-btn{
-  z-index: 10 !important;
 }
-.hover-transparent:hover{
-  background-color: transparent !important;
+
+.close-btn {
+    z-index: 10 !important;
 }
- .list-height{
-  min-height: 200px !important;
-  transition: background-color 0.2s ease;
-  flex-grow: 1 !important;
+
+.hover-transparent:hover {
+    background-color: transparent !important;
 }
-.flex-container{
-   width: 180px !important; 
-  display: flex !important;
-  flex-direction: column !important;
+
+.list-height {
+    min-height: 200px !important;
+    transition: background-color 0.2s ease;
+    flex-grow: 1 !important;
 }
-.add-checklist-btn{
-  position: absolute;
-  top: 7%;
-  right: 1.5%;
-  z-index: 10;
-  border:none;
-  transition: 0.3s ease-in-out;
+
+.flex-container {
+    width: 180px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.add-checklist-btn {
+    position: absolute;
+    top: 7%;
+    right: 1.5%;
+    z-index: 10;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+
+.progress-responsive {
+    flex-direction: row !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .progress-responsive {
+        flex-direction: column !important;
+    }
+    .tasks-board {
+        order: 2;
+        margin-top: 2rem;
+        width: 100% !important;
+    }
 }

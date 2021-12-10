@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Form, Formik} from "formik";
+import { Form, Formik } from "formik";
 import FormField from "./FormField";
 import FormArray from "./FormArray";
 import { database } from "../../../../firebase-config";
-import { ref,set } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 export default function AddTodoForm(props) {
   const { listId, tasks, setTasks, mode, item } = props;
@@ -12,12 +12,12 @@ export default function AddTodoForm(props) {
   /* -------------------------------------------------------------------------- */
   /*                           write data to firebase                           */
   /* -------------------------------------------------------------------------- */
-  useEffect(()=>{
-    writeTasksData()
-  },[tasks])
+  useEffect(() => {
+    writeTasksData();
+  }, [tasks]);
   function writeTasksData() {
     set(ref(database, "/tasks"), {
-      ...tasks
+      ...tasks,
     });
   }
   let initialValues = {
@@ -29,33 +29,29 @@ export default function AddTodoForm(props) {
   /* -------------------------------------------------------------------------- */
   /*                         intial values in edit mode                         */
   /* -------------------------------------------------------------------------- */
-  if(mode === "edit"){
-     initialValues = {
+  if (mode === "edit") {
+    initialValues = {
       taskName: item.taskName,
       description: item.description,
       deadline: item.deadline,
-      checklist:item.checklist?item.checklist:[],
+      checklist: item.checklist ? item.checklist : [],
     };
-    console.log(initialValues)
   }
   /* -------------------------------------------------------------------------- */
   /*                           on submit form function                          */
   /* -------------------------------------------------------------------------- */
   const onSubmit = (value, { resetForm }) => {
-    if(mode === "edit"){
-    item.taskName = value.taskName
-    item.description = value.description
-    item.deadline = value.deadline
-    item.checklist = value.checklist
-    const newTasks = tasks
-    setTasks([...newTasks])
-      console.log(item,tasks)
+    if (mode === "edit") {
+      item.taskName = value.taskName;
+      item.description = value.description;
+      item.deadline = value.deadline;
+      item.checklist = value.checklist;
+      const newTasks = tasks;
+      setTasks([...newTasks]);
+    } else {
+      const newTodo = { listId, id: uuidv4(), ...value, taskMembers: [] };
+      setTasks([...tasks, newTodo]);
     }
-    else{
-    const newTodo = { listId, id: uuidv4(), ...value,taskMembers:[] };
-    setTasks([...tasks, newTodo]);
-    console.log(value, newTodo, tasks);
-  }
     close.current.click();
     resetForm();
   };
@@ -101,31 +97,31 @@ export default function AddTodoForm(props) {
                     label="Deadline"
                     type="date"
                   />
-                  <FormArray formik={formik}/>
-                  {mode === "edit"?(
+                  <FormArray formik={formik} />
+                  {mode === "edit" ? (
                     <>
+                      <button
+                        type="submit"
+                        className="btn rounded-pill bg-voilet shadow text-white mt-3"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn rounded-pill bg-light shadow mt-3 ms-3"
+                        onClick={() => close.current.click()}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
                     <button
-                    type="submit"
-                    className="btn rounded-pill bg-voilet shadow text-white mt-3"
-                  >
-                    Save
-                  </button>
-                  <button
-                  type="button"
-                  className="btn rounded-pill bg-light shadow mt-3 ms-3"
-                  onClick={()=>close.current.click()}
-                >
-                 Cancel
-                </button>
-                </>
-                  ):(
-                  <button
-                    type="submit"
-                    className="btn rounded-pill bg-voilet shadow text-white mt-3"
-                  >
-                    Add task
-                  </button>)
-                  }
+                      type="submit"
+                      className="btn rounded-pill bg-voilet shadow text-white mt-3"
+                    >
+                      Add task
+                    </button>
+                  )}
                 </Form>
               )}
             />
