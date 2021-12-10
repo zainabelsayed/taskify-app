@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { ref, get, child } from "firebase/database";
 import HashLoader from "react-spinners/HashLoader";
