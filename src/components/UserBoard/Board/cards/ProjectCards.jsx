@@ -197,7 +197,7 @@ function ProjectCards(props) {
           </div>
           <div className="col-3">
             <div className={`text-todo fs-6 fw-bold ${textColor}`}>
-              {item.data.percent}%
+              {item.data.percent.toFixed(0)}%
             </div>
           </div>
         </div>
