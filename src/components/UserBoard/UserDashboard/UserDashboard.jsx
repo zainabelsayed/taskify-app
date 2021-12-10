@@ -51,7 +51,6 @@ export default function UserDashboard(props) {
             delete task.upcoming;
           }
         }
-        console.log(upcomingDate);
       }
 
       //to make sure it calculates after it's been added (if yesterday diff was 3 days then today it would be 4 days)
@@ -70,14 +69,11 @@ export default function UserDashboard(props) {
         }
       }
     }
-    console.log(tasks);
     const upcomingTasks = tasks.filter((task) => task.upcoming);
     const overdueTasks = tasks.filter((task) => task.overdue);
     setUpcomming([...upcomingTasks]);
     setOverdue([...overdueTasks]);
   };
-
-  console.log(upcoming, overdue);
   /* -------------------------------------------------------------------------- */
   /*                        update performance percentage                       */
   /* -------------------------------------------------------------------------- */

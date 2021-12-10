@@ -9,7 +9,7 @@ export default function AssignMembers(props) {
   /*                           getting project members                          */
   /* -------------------------------------------------------------------------- */
   const projectMembers = useSelector((state) => state.addMemberReducer.projectMembers);
-  console.log(projectMembers);
+  console.log(projectMembers)
   useEffect(() => {
     if (item.taskMembers && item.taskMembers.length > 0) {
       item.taskMembers.forEach((member) => {
@@ -33,7 +33,6 @@ export default function AssignMembers(props) {
       item.taskMembers = [...item.taskMembers, member];
       const newTasks = tasks;
       setTasks([...newTasks]);
-      console.log(tasks, member);
       const templateParams = {
         from_name: "Taskify members",
         project_name: `Graduation Project assigned task ${item.taskName}`,
@@ -64,7 +63,6 @@ export default function AssignMembers(props) {
     item.taskMembers.splice(item.taskMembers.indexOf(member), 1);
     const newTasks = tasks;
     setTasks([...newTasks]);
-    console.log(item, tasks);
   };
 
   return (

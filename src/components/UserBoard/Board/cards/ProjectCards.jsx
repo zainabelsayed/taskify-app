@@ -146,7 +146,7 @@ function ProjectCards(props) {
     >
       <div className="d-flex justify-content-between align-items-baseline">
         <Link
-          to={`/${category}/${item.data.projectID}/tasks`}
+          to={`/${category}/${item.data.projectID}`}
           className="text-decoration-none text-dark"
           style={{
             fontFamily:

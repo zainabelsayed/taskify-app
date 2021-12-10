@@ -5,7 +5,6 @@ import UpcomingDeadLinesItem from "./UpcomingDeadLinesItem";
 export default function UpcomingDeadLines(props) {
   const { tasks, upcoming } = props;
   useEffect(()=>{
-    console.log(upcoming)
   },[upcoming,tasks])
   return (
       <div className="text-start text-white userDashboard mt-2 p-3 d-none d-lg-block">

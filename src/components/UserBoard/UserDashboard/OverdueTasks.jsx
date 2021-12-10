@@ -4,7 +4,6 @@ import OverdueItem from "./OverdueItem"
 export default function OverdueTasks(props) {
   const { tasks, overdue } = props;
 useEffect(()=>{
-  console.log(overdue)
 },[overdue])
     return (
         <div className="text-start text-white userDashboard mt-2 p-3 d-none d-lg-block">

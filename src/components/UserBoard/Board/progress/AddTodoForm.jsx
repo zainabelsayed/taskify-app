@@ -36,7 +36,6 @@ export default function AddTodoForm(props) {
       deadline: item.deadline,
       checklist:item.checklist?item.checklist:[],
     };
-    console.log(initialValues)
   }
   /* -------------------------------------------------------------------------- */
   /*                           on submit form function                          */
@@ -49,12 +48,10 @@ export default function AddTodoForm(props) {
     item.checklist = value.checklist
     const newTasks = tasks
     setTasks([...newTasks])
-      console.log(item,tasks)
     }
     else{
     const newTodo = { listId, id: uuidv4(), ...value,taskMembers:[] };
     setTasks([...tasks, newTodo]);
-    console.log(value, newTodo, tasks);
   }
     close.current.click();
     resetForm();

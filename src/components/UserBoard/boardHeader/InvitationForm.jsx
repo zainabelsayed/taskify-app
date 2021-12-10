@@ -6,7 +6,8 @@ import { ref, set} from "firebase/database";
 import { addMemberAction } from "../../redux/projectMembersReducer";
 import ProjectMembers from "./ProjectMembers";
 
-export default function InvitationForm() {
+export default function InvitationForm(props) {
+  const {projectID} = props
   const from_name = "Taskify members";
   const project_name = "Graduation Project";
   const mailRef = useRef();
@@ -14,6 +15,7 @@ export default function InvitationForm() {
   const dispatch = useDispatch();
   const [invitedMail, setInvitedMail] = useState();
   const [member, setMember] = useState([]);
+  const [allMembers , setAllMembers ] = useState([])
   /* -------------------------------------------------------------------------- */
   /*                getting project members data from redux store               */
   /* -------------------------------------------------------------------------- */
@@ -33,11 +35,12 @@ export default function InvitationForm() {
   /* -------------------------------------------------------------------------- */
   const sendIvite = (e) => {
     e.preventDefault();
-    console.log(projectMembers);
     if (!projectMembers.includes(invitedMail)) {
-      dispatch(addMemberAction(invitedMail));
-      setMember([...member, { email: invitedMail }]);
-      writeProjectMembersData(invitedMail);
+      // dispatch(addMemberAction(invitedMail));
+      console.log(projectMembers,member)
+      setMember([...member, { email: invitedMail, projectID }]);
+      setAllMembers([...allMembers,{ email: invitedMail, projectID }])
+      writeProjectMembersData(invitedMail,projectID);
       emailjs
         .sendForm(
           "service_szwzkxn",
@@ -48,17 +51,15 @@ export default function InvitationForm() {
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     }
-    console.log(projectMembers,member);
   };
   /* -------------------------------------------------------------------------- */
   /*                    write projectMembers data to database                   */
   /* -------------------------------------------------------------------------- */
-  console.log(member.length);
-  function writeProjectMembersData(email) {
-    set(ref(database, "project-members/" + member.length), {
+  function writeProjectMembersData(email,projectID) {
+    set(ref(database, "project-members/" + allMembers.length), {
       email,
+      projectID
     });
-    console.log(member);
   }
   return (
         <>
@@ -70,6 +71,9 @@ export default function InvitationForm() {
           member={member}
           setMember={setMember}
           projectMembers={projectMembers}
+          projectID ={projectID}
+          allMembers={allMembers}
+          setAllMembers={setAllMembers}
         />
         <input
           ref={mailRef}
